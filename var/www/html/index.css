@@ -1,0 +1,13 @@
+.header{
+    text-align: center;
+    background: #000000;
+    color:white;
+    
+}
+.centered{
+    text-align: center;
+    position: relative;
+}
+.right{
+    color:#ff0000;
+}
