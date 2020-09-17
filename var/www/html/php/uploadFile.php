@@ -24,6 +24,7 @@ if($_FILES["fileToUpload"]["error"] == UPLOAD_ERR_OK){
 	echo "$uploads_dir/$name";
 	if(move_uploaded_file($tmp_name, "$uploads_dir/$name")){
 		echo "success";
+		
 	}
 		
 }
