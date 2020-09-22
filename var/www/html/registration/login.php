@@ -1,14 +1,13 @@
-<?php include('server.php'); 
-ini_set('display_errors',1);?>
+<?php include('server.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Registration system PHP and MySQL</title>
+  <title>GOBS</title>
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <div class="header">
-  	<h2>Login</h2>
+  	<h2>Login to GOBS</h2>
   </div>
 	 
   <form method="post" action="login.php">

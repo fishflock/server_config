@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Registration system PHP and MySQL</title>
+    <title>Register for GOBS</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -32,7 +32,7 @@
         <button type="submit" class="btn" name="reg_user">Register</button>
     </div>
     <p>
-        Already a member? <a href="login.php">Sign in</a>
+        Already have an account? <a href="login.php">Sign in</a>
     </p>
 </form>
 </body>
