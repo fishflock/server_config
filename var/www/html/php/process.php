@@ -3,60 +3,52 @@
 * @author: Peec
 */
 class Process{
-    private $pid;
     private $uid;
-    private $spawnTime;
     private $fileName;
     private $filePath;
     private $binaryPath = "/var/www/html/GOBS/gobs";
-    public function __construct($uid, $pid=null, $file_name=null, $spawn_time=null ){
+    private $uniqueID;
+
+    public function __construct($processStage, $uid, $file_name=null, $spawn_time=null, $uniqueID=null ){
 
         $this->uid = $uid;
 
-        if($pid == null){ //new process
-            $this->spawnTime = date(time());
-            $this->fileName = $file_name;
-            $this->filePath = "/var/www/html/hidden/uploads/" . $_SESSION['uid'] .'/'. $file_name;
-            $this->runCom();
-        }
-        else{
-            $this->setPid($pid);
-            $this->spawnTime = $spawn_time;
-            $this->fileName = $file_name;
-            $this->filePath = "/var/www/html/hidden/uploads/" . $_SESSION['uid'] .'/'. $file_name;
+        switch ($processStage){
+            case "create":
+                $this->fileName = $file_name;
+                $this->filePath = "/var/www/html/hidden/uploads/" . $this->uid .'/'. $file_name;
+                $this->uniqueID = $uid.$spawn_time;
+                $this->runCom();
+                break;
 
+            case "check":
+                $this->fileName = $file_name;
+                $this->uniqueID = $uniqueID;
+                break;
         }
     }
 
     private function runCom(){
-        //$command = 'nohup '.$this->binaryPath.' '. $this->filePath .' > /dev/null 2>&1 & echo $!';
-        $command = 'nohup ls -la > /dev/null 2>&1 & echo $!';
+        $command = 'bash -c "exec -a ' .$this->uniqueID. 'while true > /dev/null 2>&1 & $!"';
         exec($command ,$op);
-        $this->pid = (int)$op[0];
     }
+    //$command = 'nohup '.$this->binaryPath.' '. $this->filePath .' > /dev/null 2>&1 & echo $!';
+    //$command = 'nohup ls -la > /dev/null 2>&1 & echo $!';
 
-    public function setPid($pid){
-        $this->pid = $pid;
-    }
-
-    public function getPid(){
-        return $this->pid;
+    public function getUniqueID(){
+        return $this->uniqueID;
     }
 
     public function status(){
-        $command = 'ps -p '.$this->pid;
+        $command = 'pgrep '.$this->uniqueID. ' | xargs --no-run-if-empty ps fp';
         exec($command,$op);
         if (!isset($op[1]))return false;
         else return true;
     }
 
-    public function start(){
-        if ($this->command != '')$this->runCom();
-        else return true;
-    }
 
     public function stop(){
-        $command = 'kill '.$this->pid;
+        $command = 'pkill -f '.$this->uniqueID;
         exec($command);
         if ($this->status() == false)return true;
         else return false;
