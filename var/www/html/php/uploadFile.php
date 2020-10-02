@@ -1,4 +1,9 @@
-<?php include("auth.php");
+<?
+session_start();
+if (!isset($_SESSION['username'])) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: registration/login.php');
+}
 
 $uploads_dir = "/var/www/html/hidden/uploads/" . $_SESSION['uid'];
 $allowed = array('txt', 'csv');

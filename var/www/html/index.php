@@ -22,16 +22,15 @@ if (!isset($_SESSION['username'])) {
       ?>
 
   </div>
-  <hr />
   <br>
   <br>
-  <?php include('php/fileListing.php'); ?>
+  <?php include_once('php/fileListing.php'); ?>
   <br>
   <form action="php/uploadFile.php" method="post" enctype="multipart/form-data">
     Upload a New File
     <input type="file" name="fileToUpload" id="fileToUpload">
     <input type="submit" value="Upload File" name="submit">
-  </form> 
-  
+  </form>
+  <?php include_once('php/listProcesses.php'); ?>
 
 </html>
