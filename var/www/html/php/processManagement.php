@@ -5,6 +5,9 @@ include_once ('debug.php');
 function register_process($uid, $file_name, $uniqueID){
     global $db;
     $spawn_time = date('Y-m-d H:i:s',time());
+    $file_name = mysqli_escape_string($db, $file_name); //could potentially cause issues,
+    // may be better long term to limit filename chars
+
     $query = "INSERT INTO processes (uid, uniqueID, spawn_time, file_name) VALUES ('$uid', '$uniqueID','$spawn_time','$file_name')";
     mysqli_query($db, $query);
 }

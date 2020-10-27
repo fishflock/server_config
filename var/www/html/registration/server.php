@@ -52,6 +52,11 @@ if (isset($_POST['reg_user'])) {
     if (count($errors) == 0) {
         $password = md5($password_1);//encrypt the password before saving in the database
 
+        $username = mysqli_escape_string($db, $username);
+        $email = mysqli_escape_string($db, $email);
+        $password = mysqli_escape_string($db, $password);
+
+
         $query = "INSERT INTO users (username, email, password) 
   			  VALUES('$username', '$email', '$password')";
         mysqli_query($db, $query);
@@ -72,6 +77,9 @@ if (isset($_POST['login_user'])) {
 
     if (count($errors) == 0) {
         $password = md5($password);
+
+        $username = mysqli_escape_string($db, $username);
+
         $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
         $results = mysqli_query($db, $query);
         $userinfo = mysqli_fetch_assoc($results);
