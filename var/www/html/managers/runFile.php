@@ -1,18 +1,17 @@
 <?php
-include_once('debug.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/debug.php');
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
-    header('location: /registration/login.php');
+    header('location: '.$_SERVER['DOCUMENT_ROOT'].'/registration/login.php');
 }
 if (!isset($_SESSION['uid'])) {
-    header("location: /registration/login.php");
+    header("location: registration/login.php");
 }
-
-
+include_once($_SERVER['DOCUMENT_ROOT'].'/processes/process.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
 if (isset($_POST['runFileName'])) {
 
-    include_once('process.php');
-    include_once('processManagement.php');
+
 
     $uid = $_SESSION['uid'];
     $filePath = "/var/www/html/hidden/uploads/" . $uid . "/" . $_POST['runFileName'];

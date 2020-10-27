@@ -1,7 +1,4 @@
 <?php
-/* An easy way to keep in track of external processes.
-* @author: Peec
-*/
 class Process{
     private $uid;
     private $fileName;

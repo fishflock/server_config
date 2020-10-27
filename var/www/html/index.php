@@ -14,7 +14,7 @@ if (!isset($_SESSION['username'])) {
 
       if (isset($_SESSION['username'])){
           $username = $_SESSION['username'];
-          echo "<h2 class='right'>Welcome $username: <a href='registration/index.php?logout='1'' style='color: red';>logout</a> </h2>";
+          echo "<h2 class='right'>Welcome $username: <a href='/registration/index.php?logout='1'' style='color: red';>logout</a> </h2>";
       }
       else{
           echo "<h2 class='right''><a href='login.html''>Login </a></h2>";
@@ -24,13 +24,17 @@ if (!isset($_SESSION['username'])) {
   </div>
   <br>
   <br>
-  <?php include_once('php/fileListing.php'); ?>
+  <?php include_once('managers/fileListing.php'); ?>
   <br>
-  <form action="php/uploadFile.php" method="post" enctype="multipart/form-data">
+  <form action="managers/uploadFile.php" method="post" enctype="multipart/form-data">
     Upload a New File
     <input type="file" name="fileToUpload" id="fileToUpload">
     <input type="submit" value="Upload File" name="submit">
   </form>
-  <?php include_once('php/listProcesses.php'); ?>
+  <?php include_once('processes/listProcesses.php'); ?>
+
+  <?php include_once('managers/gobsOutput.php'); ?>
+
+  <?php include_once('managers/x_output.php'); ?>
 
 </html>

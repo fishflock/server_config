@@ -12,10 +12,10 @@ include_once('processManagement.php');
 
 $uid = $_SESSION['uid'];
 
-if(isset($_POST['cancel'])){ //needs some sort of security check if pid is duplicated
+if(isset($_POST['cancel'])){
 
     $process = new Process("check", $_SESSION['uid'], null, null, $_POST['uniqueID']);
-    //check if process is in the db with correct user before allowing it to stop
+    //check if process is in the db with correct user before allowing a stop attempt
 
     if(check_process($_SESSION['uid'],$_POST['uniqueID'])){
         $process->stop();
@@ -48,14 +48,16 @@ if(isset($_POST['record'])){
             echo "<tr>";
             echo "<td>" . $curr['file_name'] . "</td>";
             echo "<td>" . $curr['spawn_time'] . "</td>";
-            echo "<td>" . $process->status() . "</td>";
+
             if($process->status()){
+                echo "<td> Running  </td>";
                 echo "<td>" . "<form method='post'>";
                 echo " <input name='uniqueID' type='number' value='$uniqueID' hidden>";
                 echo " <input name='cancel' type='submit' value='Cancel'></form>";
                 echo "</td>";
             }
             else{
+                echo "<td> Finished Or Stopped  </td>";
                 echo "<td>" . "<form method='post'>";
                 echo " <input name='uniqueID' type='number' value='$uniqueID' hidden>";
                 echo " <input name='record' type='submit' value='Remove Record'></form>";
