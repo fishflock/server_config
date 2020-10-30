@@ -14,10 +14,11 @@ if (isset($_POST['runFileName'])) {
 
 
     $uid = $_SESSION['uid'];
-    $filePath = "/var/www/html/hidden/uploads/" . $uid . "/" . $_POST['runFileName'];
+    $filePath = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $uid . "/" . $_POST['runFileName'];
+    $outputFilePath = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $uid . "/gobs_output/" . pathinfo($_POST['runFileName'])['filename'].'.txt' ;
 
     if (is_file($filePath)) {
-        $newProcess = new Process("create", $_SESSION['uid'], $_POST['runFileName'], date(time()));
+        $newProcess = new Process("create", $_SESSION['uid'], $_POST['runFileName'], date(time()), null, "gobs", $outputFilePath);
         register_process($_SESSION['uid'], $_POST['runFileName'], $newProcess->getUniqueID());
     }
 }

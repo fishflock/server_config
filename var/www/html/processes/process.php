@@ -3,34 +3,58 @@ class Process{
     private $uid;
     private $fileName;
     private $filePath;
-    private $binaryPath = "/var/www/html/GOBS/gobs";
+    private $outputFile;
+    private $binaryPath;
+    private $binary;
     private $uniqueID;
 
-    public function __construct($processStage, $uid, $file_name=null, $spawn_time=null, $uniqueID=null ){
+
+    public function __construct($processStage, $uid, $fileName=null, $spawnTime=null, $uniqueID=null, $binary=null, $outputFile=null){
 
         $this->uid = $uid;
+        $this->outputFile = $outputFile;
+
+        $this->binary = $binary;
+        switch($binary){
+            case "gobs":
+                $this->binaryPath = $_SERVER['DOCUMENT_ROOT']."/hidden/scripts/gobs";
+                break;
+            case "x":
+                $this->binaryPath = $_SERVER['DOCUMENT_ROOT']."/hidden/scripts/nX";
+                break;
+        }
+
 
         switch ($processStage){
             case "create":
-                $this->fileName = $file_name;
-                $this->filePath = "/var/www/html/hidden/uploads/" . $this->uid .'/'. $file_name;
-                $this->uniqueID = $uid.$spawn_time;
+                $this->fileName = $fileName;
+                $this->filePath = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $this->uid .'/'. $fileName;
+                $this->uniqueID = $uid.$spawnTime;
                 $this->runCom();
                 break;
 
             case "check":
-                $this->fileName = $file_name;
+                $this->fileName = $fileName;
                 $this->uniqueID = $uniqueID;
                 break;
         }
+
     }
 
     private function runCom(){
-        $command = 'bash -c "exec -a ' .$this->uniqueID. 'while true > /dev/null 2>&1 & $!"';
+        $command = "";
+        switch($this->binary){
+            case "gobs":
+                $command = 'bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile .' 1 1 1 > /var/www/html/test_output.txt 2>&1 & $!"';
+                include_once('../phpHelpers/debug.php');
+                debugToConsole($command);
+                break;
+            case "x":
+                $command = 'bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. '  > /dev/null 2>&1 & $!"';
+                break;
+        }
         exec($command ,$op);
     }
-    //$command = 'nohup '.$this->binaryPath.' '. $this->filePath .' > /dev/null 2>&1 & echo $!';
-    //$command = 'nohup ls -la > /dev/null 2>&1 & echo $!';
 
     public function getUniqueID(){
         return $this->uniqueID;

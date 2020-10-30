@@ -17,6 +17,17 @@ if (!is_dir($directory)) {
 include_once($_SERVER['DOCUMENT_ROOT'].'/processes/process.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
 
+if (isset($_POST['runFileName'])) {
+    $uid = $_SESSION['uid'];
+    $filePath =  $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $uid . "/gobs_output/" . $_POST['runFileName'];
+
+    if (is_file($filePath)) {
+        $newProcess = new Process("create", $_SESSION['uid'], $_POST['runFileName'], date(time()));
+        register_process($_SESSION['uid'], $_POST['runFileName'], $newProcess->getUniqueID());
+    }
+}
+
+
 ?>
 <html>
 <body>

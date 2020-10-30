@@ -16,6 +16,7 @@ if ($_FILES["fileToUpload"]["error"] == UPLOAD_ERR_OK) {
     if (move_uploaded_file($tmp_name, "$uploads_dir/$name")) {
         header('location: '.$_SERVER['DOCUMENT_ROOT'].'/index.php');
     } else {
+        echo "<h2 class='right'>".$_SERVER['DOCUMENT_ROOT']."</h2>";
         echo "<h2 class='right'>File upload Failed, Please Try Again: <a href=".$_SERVER['DOCUMENT_ROOT']. "/index.php style='color: #ff0000';>Return</a> </h2>";
     }
 
