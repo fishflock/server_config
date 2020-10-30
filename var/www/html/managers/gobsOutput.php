@@ -50,7 +50,7 @@ if (isset($_POST['runFileName'])) {
             echo "<tr>";
             echo "<td>" . $name . "</td>";
             echo "<td>" . $cur->getSize() . "</td>";
-            echo "<td>" . filemtime($filename->getPathname()) . "</td>";
+            echo "<td>" .  date ("Y-m-d H:i:s",filemtime($cur->getPathname()))  . "</td>";
             echo "<td>" . "<form method='post'>";
             echo " <input name='runFileName' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Run'></form>";
