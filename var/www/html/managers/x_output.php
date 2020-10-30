@@ -7,8 +7,10 @@ if (!isset($_SESSION['uid'])) {
     header("location: /registration/login.php");
 }
 
-$uid = $_SESSION['uid'];
+
 if (isset($_SESSION['uid'])){
+
+$uid = $_SESSION['uid'];
 $directory = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $uid ."/x_output";
 if (!is_dir($directory)) {
     mkdir($directory, 0775);
@@ -39,7 +41,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
             echo "<tr>";
             echo "<td>" . $name . "</td>";
             echo "<td>" . $cur->getSize() . "</td>";
-            echo "<td>" . filemtime($filename) . "</td>";
+            echo "<td>" . date ("Y-m-d H:i:s",filemtime($cur->getPathname())) . "</td>";
             echo "<td>" . "<form method='post'>";
             echo " <input name='downloadFileName' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";

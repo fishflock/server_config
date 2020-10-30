@@ -1,11 +1,11 @@
 <?php
 class Process{
-    private $uid;
-    private $fileName;
-    private $filePath;
-    private $outputFile;
-    private $binaryPath;
-    private $binary;
+    private $uid; //user ID
+    private $fileName; //input file name
+    private $filePath; //input file path
+    private $outputFile; //output file path
+    private $binaryPath; //path to executable
+    private $binary; //gobs for GOBS, x for NetworkX
     private $uniqueID;
 
 
@@ -18,9 +18,11 @@ class Process{
         switch($binary){
             case "gobs":
                 $this->binaryPath = $_SERVER['DOCUMENT_ROOT']."/hidden/scripts/gobs";
+                $this->filePath = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $this->uid .'/'. $fileName;
                 break;
             case "x":
                 $this->binaryPath = $_SERVER['DOCUMENT_ROOT']."/hidden/scripts/nX";
+                $this->filePath = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $this->uid .'/gobs_output/'. $fileName;
                 break;
         }
 
@@ -28,7 +30,6 @@ class Process{
         switch ($processStage){
             case "create":
                 $this->fileName = $fileName;
-                $this->filePath = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $this->uid .'/'. $fileName;
                 $this->uniqueID = $uid.$spawnTime;
                 $this->runCom();
                 break;
@@ -46,11 +47,9 @@ class Process{
         switch($this->binary){
             case "gobs":
                 $command = 'bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile .' 1 1 1 > /var/www/html/test_output.txt 2>&1 & $!"';
-                include_once('../phpHelpers/debug.php');
-                debugToConsole($command);
                 break;
             case "x":
-                $command = 'bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. '  > /dev/null 2>&1 & $!"';
+                $command = 'bash -c "exec -a ' .$this->uniqueID. ' python3 '. $this->binaryPath. ' ' . $this->filePath . ' '. $this->outputFile .'> /var/www/html/test_output.txt 2>&1 & $!"' ;
                 break;
         }
         exec($command ,$op);
