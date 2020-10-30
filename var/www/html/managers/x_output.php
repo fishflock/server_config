@@ -42,8 +42,8 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
             echo "<td>" . $name . "</td>";
             echo "<td>" . $cur->getSize() . "</td>";
             echo "<td>" . date ("Y-m-d H:i:s",filemtime($cur->getPathname())) . "</td>";
-            echo "<td>" . "<form method='post'>";
-            echo " <input name='downloadFileName' type='text' value=$name hidden>";
+            echo "<td>" . "<form method='post' action='managers/downloadFile.php'>";
+            echo " <input name='fileName' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
 
             echo "</td>";

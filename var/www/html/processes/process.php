@@ -46,10 +46,10 @@ class Process{
         $command = "";
         switch($this->binary){
             case "gobs":
-                $command = 'bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile .' 1 1 1 > /var/www/html/test_output.txt 2>&1 & $!"';
+                $command = 'bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile .' 1 1 1  & $!"';
                 break;
             case "x":
-                $command = 'bash -c "exec -a ' .$this->uniqueID. ' python3 '. $this->binaryPath. ' ' . $this->filePath . ' '. $this->outputFile .'> /var/www/html/test_output.txt 2>&1 & $!"' ;
+                $command = 'bash -c "exec -a ' .$this->uniqueID. ' python3 '. $this->binaryPath. ' ' . $this->filePath . ' '. $this->outputFile .' & $!"' ;
                 break;
         }
         exec($command ,$op);
