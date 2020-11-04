@@ -1,7 +1,6 @@
 <?php
 // connect to the database
 $db = mysqli_connect('localhost', 'phpadmin', 'zxcasd123', 'registration');
-include_once('phpHelpers/debug.php');
 function register_process($uid, $file_name, $uniqueID){
     global $db;
     $spawn_time = date('Y-m-d H:i:s',time());

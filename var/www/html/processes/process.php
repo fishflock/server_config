@@ -7,13 +7,14 @@ class Process{
     private $binaryPath; //path to executable
     private $binary; //gobs for GOBS, x for NetworkX
     private $uniqueID;
+    private $params;//space separated string with cmd line params
 
 
-    public function __construct($processStage, $uid, $fileName=null, $spawnTime=null, $uniqueID=null, $binary=null, $outputFile=null){
+    public function __construct($processStage, $uid, $fileName=null, $spawnTime=null, $uniqueID=null, $binary=null, $outputFile=null, $params=null){
 
         $this->uid = $uid;
         $this->outputFile = $outputFile;
-
+        $this->params = $params;
         $this->binary = $binary;
         switch($binary){
             case "gobs":
@@ -46,7 +47,7 @@ class Process{
         $command = "";
         switch($this->binary){
             case "gobs":
-                $command = 'bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile .' 1 1 1  & $!"';
+                $command = 'bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile . ' '.($this->params !=null ? $this->params : "1 1 1") .' & $!"';
                 break;
             case "x":
                 $command = 'bash -c "exec -a ' .$this->uniqueID. ' python3 '. $this->binaryPath. ' ' . $this->filePath . ' '. $this->outputFile .' & $!"' ;

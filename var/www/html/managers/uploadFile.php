@@ -13,10 +13,6 @@ if ($_FILES["fileToUpload"]["error"] == UPLOAD_ERR_OK) {
     $tmp_name = $_FILES["fileToUpload"]["tmp_name"];
 
     $name = basename($_FILES["fileToUpload"]["name"]);
-    include_once("../phpHelpers/debug.php");
-    echo $name;
-    echo $tmp_name;
-    echo "$uploads_dir/$name";
     if (move_uploaded_file($tmp_name, "$uploads_dir/$name")) {
         header('location: ../index.php');
     } else {
