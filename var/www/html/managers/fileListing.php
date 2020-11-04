@@ -42,7 +42,7 @@ include_once('deleteFile.php');
             echo " <input name='submit' type='submit' value='Run'></form>";
 
             echo "<td>" . "<form method='post'>";
-            echo " <input name='delFileName' type='text' value=$name hidden>";
+            echo " <input name='delSourceFileName' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Delete File'></form>";
 
             echo "</td>";

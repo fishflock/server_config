@@ -28,7 +28,7 @@ if (isset($_POST['runFileName'])) {
     }
 }
 
-
+include_once('deleteFile.php');
 ?>
 <html>
 <body>
@@ -36,11 +36,11 @@ if (isset($_POST['runFileName'])) {
     <h2>Gobs Output Files</h2>
     <hr>
     <table border='2'>
-        <tr>
             <th>File Name</th>
             <th>File Size</th>
             <th>Date Modified</th>
             <th>Create Visualization</th>
+            <th>Delete File</th>
         </tr>
 
         <?php
@@ -55,6 +55,12 @@ if (isset($_POST['runFileName'])) {
             echo "<td>" . "<form method='post'>";
             echo " <input name='runFileName' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Run'></form>";
+
+            echo "</td>";
+
+            echo "<td>" . "<form method='post'>";
+            echo " <input name='delGobsFileName' type='text' value=$name hidden>";
+            echo " <input name='submit' type='submit' value='Delete File'></form>";
 
             echo "</td>";
             echo "</tr>";

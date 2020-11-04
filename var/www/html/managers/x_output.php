@@ -19,6 +19,8 @@ if (!is_dir($directory)) {
 include_once($_SERVER['DOCUMENT_ROOT'].'/processes/process.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
 
+include_once('deleteFile.php');
+include_once('downloadFile.php');
 ?>
 <html>
 <body>
@@ -31,6 +33,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
             <th>File Size</th>
             <th>Date Modified</th>
             <th>Download</th>
+            <th>Delete</th>
         </tr>
 
         <?php
@@ -42,9 +45,15 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
             echo "<td>" . $name . "</td>";
             echo "<td>" . $cur->getSize() . "</td>";
             echo "<td>" . date ("Y-m-d H:i:s",filemtime($cur->getPathname())) . "</td>";
-            echo "<td>" . "<form method='post' action='managers/downloadFile.php'>";
+
+            echo "<td>" . "<form method='post'>";
             echo " <input name='fileName' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
+            echo "</td>";
+
+            echo "<td>" . "<form method='post'>";
+            echo " <input name='delXFileName' type='text' value=$name hidden>";
+            echo " <input name='submit' type='submit' value='Delete File'></form>";
 
             echo "</td>";
             echo "</tr>";

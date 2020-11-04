@@ -23,6 +23,7 @@ if (!isset($_SESSION['username'])) {
 
   </div>
   <br>
+  <h2 class='centered'><a href="instr.php"> Instructions </a></h2>
   <br>
   <?php include_once('managers/fileListing.php'); ?>
   <br>
