@@ -69,13 +69,13 @@ It is hidden by default in css
             <input id='popupFileName' name='runFileName' type='text' value=''>
 
              <label for="popupNumber1">Alpha Value</label>
-            <input id='popupNumber1' name='param1' type='number' min="0.00001" max="10" step="0.00001">
+            <input id='popupNumber1' name='param3' type='number' min="0.00001" max="100" step="0.00001">
 
              <label for="popupNumber2">Noise Reduction</label>
-            <input id='popupNumber2' name='param2' type='number' min="0.00001" max="10" step="0.00001">
+            <input id='popupNumber2' name='param2' type='number' min="0" max="1">
 
              <label for="popupNumber3">Normalization</label>
-            <input id='popupNumber2' name='param3' type='number' min="0.00001" max="10" step="0.00001">
+            <input id='popupNumber2' name='param1' type='number' min="0" max="1" >
             <br><br>
             <input name='submit' type='submit' value='Run Through GOBS'>
 

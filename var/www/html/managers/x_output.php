@@ -20,7 +20,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/processes/process.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
 
 include_once('deleteFile.php');
-include_once('downloadFile.php');
+
 ?>
 <html>
 <body>
@@ -46,7 +46,7 @@ include_once('downloadFile.php');
             echo "<td>" . $cur->getSize() . "</td>";
             echo "<td>" . date ("Y-m-d H:i:s",filemtime($cur->getPathname())) . "</td>";
 
-            echo "<td>" . "<form method='post'>";
+            echo "<td>" . "<form method='post' action='/managers/downloadFile.php'>";
             echo " <input name='fileName' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
             echo "</td>";
