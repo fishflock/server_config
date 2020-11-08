@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: /registration/login.php');
@@ -20,7 +21,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/processes/process.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
 
 include_once('deleteFile.php');
-
+include_once('../phpHelpers/header.php');
 ?>
 <html>
 <body>

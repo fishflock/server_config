@@ -18,10 +18,5 @@ include_once ('phpHelpers/header.php');
     <input type="file" name="fileToUpload" id="fileToUpload">
     <input type="submit" value="Upload File" name="submit">
   </form>
-  <?php include_once('processes/listProcesses.php'); ?>
-
-  <?php include_once('managers/gobsOutput.php'); ?>
-
-  <?php include_once('managers/x_output.php'); ?>
 
 </html>

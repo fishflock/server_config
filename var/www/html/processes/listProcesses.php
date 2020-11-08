@@ -30,7 +30,7 @@ if(isset($_POST['record'])){
 <html>
 <body>
 <table>
-    <h2>Process History</h2>
+    <h2>GOBS Process History</h2>
     <hr>
     <table border='2'>
         <tr>

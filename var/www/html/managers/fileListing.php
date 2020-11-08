@@ -57,33 +57,34 @@ This is the run file popup.  It uses a div that is shown/hidden with javascript 
 It is hidden by default in css
 --->
 
-<link rel='stylesheet' href="managers/popupStyle.css">
+<link rel='stylesheet' href="../managers/popupStyle.css">
 
 <div id="myModal" class="modal">
 
     <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>
-         <form method='post'>
-             <label for="popupFileName">File Name</label>
+        <form method='post'>
+            <label for="popupFileName">File Name</label>
             <input id='popupFileName' name='runFileName' type='text' value=''>
 
-             <label for="popupNumber1">Alpha Value</label>
+            <label for="popupNumber1">Alpha Value</label>
             <input id='popupNumber1' name='param3' type='number' min="0.00001" max="100" step="0.00001">
 
-             <label for="popupNumber2">Noise Reduction</label>
+            <label for="popupNumber2">Noise Reduction</label>
             <input id='popupNumber2' name='param2' type='number' min="0" max="1">
 
-             <label for="popupNumber3">Normalization</label>
+            <label for="popupNumber3">Normalization</label>
             <input id='popupNumber2' name='param1' type='number' min="0" max="1" >
             <br><br>
-            <input name='submit' type='submit' value='Run Through GOBS'>
+            <input name='submit' type='submit' id="submit" value='Run Through GOBS' >
 
         </form>
 
     </div>
 
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
 
@@ -107,4 +108,11 @@ It is hidden by default in css
             modal.style.display = "none";
         }
     }
+    var sub = document.getElementById("submit");
+    console.log("outside test");
+    console.log(sub);
+    sub.onclick = function(){
+        console.log("test");
+    }
 </script>
+

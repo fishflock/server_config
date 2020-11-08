@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: /registration/login.php');
@@ -26,9 +27,11 @@ if (isset($_POST['runFileName'])) {
         $newProcess = new Process("create", $_SESSION['uid'], $_POST['runFileName'], date(time()), null, "x", $outputFilePath);
         register_process($_SESSION['uid'], $_POST['runFileName'], $newProcess->getUniqueID());
     }
+    header("location: /managers/x_output.php");
 }
 
 include_once('deleteFile.php');
+include_once('../phpHelpers/header.php');
 ?>
 <html>
 <body>
@@ -70,4 +73,5 @@ include_once('deleteFile.php');
         ?>
     </table>
 </body>
+<?php include_once ('../processes/listProcesses.php');?>
 </html>
