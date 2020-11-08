@@ -4,6 +4,7 @@ if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: registration/login.php');
 }
+include_once ('../phpHelpers/header.php');
 ?>
 <br>
 <h2> Step 1: Upload a File</h2>
@@ -13,7 +14,8 @@ if (!isset($_SESSION['username'])) {
 <br>
 <h2> Step 2: Run GOBS Algorithm</h2>
 <p>The file you uploaded will appear above. Click the 'Run' button next to the selected file.</p>
-<p>Select the input parameters (0-100 for Alpha Value, 0 or 1 for Noise Reduction and Normalization, then click 'Run through GOBS Framework'. </p>
+<p>Select the input parameters (0-100 for Alpha Value, 0 or 1 for Noise Reduction and Normalization,</p>
+<p>then click 'Run through GOBS Framework'. </p>
 <p>While the algorithm is running, you can manage the process under 'Process History'.</p>
 <br>
 <h2> Step 3: Run Social Network Analysis</h2>
@@ -25,6 +27,6 @@ if (!isset($_SESSION['username'])) {
 <p>Enjoy!</p>
 <br>
 <br>
-<h2><a href="index.php">Go Back</a></h2>
+<h2><a href="../index.php">Go Back</a></h2>
 
 
