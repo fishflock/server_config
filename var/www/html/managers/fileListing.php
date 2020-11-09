@@ -37,7 +37,7 @@ include_once('deleteFile.php');
             echo "<td>" . $name . "</td>";
             echo "<td>" . $cur->getSize() . "</td>";
 
-            echo "<td> <button id='btnRunFile' name='runFile' value=$name type='button'>Run</td>";
+            echo "<td> <button id='btnRunFile' name='runFile' value=$name type='button'>Run GOBS on this File</td>";
 
             echo "<td>" . "<form method='post'>";
             echo " <input name='delSourceFileName' type='text' value=$name hidden>";
@@ -107,12 +107,6 @@ It is hidden by default in css
         if (event.target == modal) {
             modal.style.display = "none";
         }
-    }
-    var sub = document.getElementById("submit");
-    console.log("outside test");
-    console.log(sub);
-    sub.onclick = function(){
-        console.log("test");
     }
 </script>
 

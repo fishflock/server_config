@@ -9,14 +9,20 @@ include_once ('phpHelpers/header.php');
 ?>
 
 
-  </div>
+<div id="content" style="height:30%;width:100%;">
   <br>
-  <?php include_once('managers/fileListing.php'); ?>
-  <br>
-  <form action="managers/uploadFile.php" method="post" enctype="multipart/form-data">
-    Upload a New File
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload File" name="submit">
-  </form>
+    <div id="visTable" style="float:left">
+        <?php include_once('managers/fileListing.php'); ?>
+    </div>
+
+
+    <div id="visImg" style="float: left;padding-left: 5%;padding-top: 7%">
+          <form action="managers/uploadFile.php" method="post" enctype="multipart/form-data">
+            Upload a New File
+            <input type="file" name="fileToUpload" id="fileToUpload">
+            <input type="submit" value="Upload File" name="submit">
+          </form>
+    </div>
+</div>
 
 </html>

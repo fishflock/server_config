@@ -50,7 +50,7 @@ class Process{
                 $command = 'bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile . ' '.($this->params !=null ? $this->params : "1 1 1") .' & $!"';
                 break;
             case "x":
-                $command = 'bash -c "exec -a ' .$this->uniqueID. ' python3 '. $this->binaryPath. ' ' . $this->filePath . ' '. $this->outputFile .' & $!"' ;
+                $command = 'bash -c "exec -a ' .$this->uniqueID. ' python3 '. $this->binaryPath. ' ' . $this->filePath . ' '. $this->outputFile .' ' .($this->params !=null ? $this->params : "weight").' & $!"' ;
                 break;
         }
         exec($command ,$op);

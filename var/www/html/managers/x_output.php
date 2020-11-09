@@ -17,6 +17,8 @@ if (!is_dir($directory)) {
     mkdir($directory, 0775);
 }
 
+
+
 include_once($_SERVER['DOCUMENT_ROOT'].'/processes/process.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
 
@@ -24,7 +26,16 @@ include_once('deleteFile.php');
 include_once('../phpHelpers/header.php');
 ?>
 <html>
-<body>
+<head>
+<style>
+    img {
+    float:right; margin-left:20px
+    }
+
+</style>
+</head>
+<div id="content" style="height:30%;width:100%;">
+<div id="visTable" style="float:left">
 <table>
     <h2>Completed Visualizations</h2>
     <hr>
@@ -33,6 +44,7 @@ include_once('../phpHelpers/header.php');
             <th>File Name</th>
             <th>File Size</th>
             <th>Date Modified</th>
+            <th>View</th>
             <th>Download</th>
             <th>Delete</th>
         </tr>
@@ -46,6 +58,7 @@ include_once('../phpHelpers/header.php');
             echo "<td>" . $name . "</td>";
             echo "<td>" . $cur->getSize() . "</td>";
             echo "<td>" . date ("Y-m-d H:i:s",filemtime($cur->getPathname())) . "</td>";
+            echo "<td> <button id='btnViewFile' name='viewFile' value=$name type='button'>View on Page</td>";
 
             echo "<td>" . "<form method='post' action='/managers/downloadFile.php'>";
             echo " <input name='fileName' type='text' value=$name hidden>";
@@ -63,5 +76,28 @@ include_once('../phpHelpers/header.php');
         }
         ?>
     </table>
+    </div>
+    <div id="visImg" style="float: left;padding-left: 5%">
+        <img id="displayImage" src="" style="width: auto; height:auto" visibility="hidden">
+    </div>
+</div>
 </body>
 </html>
+
+
+<!--
+On page image Loader
+-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var displayImage = document.getElementById("displayImage");
+
+    $("button").click(function() {
+        var fired_button = $(this).val();
+        //update popup filename
+        document.getElementById("displayImage").src = "/managers/downloadFile.php?&fileName=" +fired_button;
+        document.getElementById("displayImage").visibility = "visbile";
+    });
+
+</script>
