@@ -47,7 +47,7 @@ class Process{
         $command = "";
         switch($this->binary){
             case "gobs":
-                $command = 'nice - 19 bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile . ' '.($this->params !=null ? $this->params : "1 1 1") .' & $!"';
+                $command = 'bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile . ' '.($this->params !=null ? $this->params : "1 1 1") .' & $!"';
                 break;
             case "x":
                 $command = 'bash -c "exec -a ' .$this->uniqueID. ' python3 '. $this->binaryPath. ' ' . $this->filePath . ' '. $this->outputFile .' ' .($this->params !=null ? $this->params : "weight").' & $!"' ;
