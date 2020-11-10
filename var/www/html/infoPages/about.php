@@ -4,7 +4,7 @@ include_once('../phpHelpers/header.php');
 
 ?>
 <html>
-    <head>
+    <head> <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
         <style>
             p {
                 line-height: 1.5;

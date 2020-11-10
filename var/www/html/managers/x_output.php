@@ -27,7 +27,7 @@ include_once('../phpHelpers/header.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
 ?>
 <html>
-<head>
+<head>  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <style>
     img {
     float:right; margin-left:20px
@@ -36,7 +36,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
 </style>
 </head>
 <div id="content" style="height:30%;width:100%;">
-<div id="visTable" style="float:left">
+<div id="visTable" <div style="float:left; padding-left: 10%; padding-top: 2%">
 <table>
     <h2>Completed Visualizations</h2>
     <hr>

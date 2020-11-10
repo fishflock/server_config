@@ -40,7 +40,9 @@ include_once('../phpHelpers/header.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
 ?>
 <html>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <body>
+<div style="float:left; padding-left: 10%; padding-top: 2%">
 <table>
     <h2>Gobs Output Files</h2>
     <hr>
@@ -81,9 +83,12 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
         }
         ?>
     </table>
+
+
+<?php include_once ('../processes/listProcesses.php');?>
+</div>
 </body>
 </html>
-<?php include_once ('../processes/listProcesses.php');?>
 <!---
 This is the run file popup.  It uses a div that is shown/hidden with javascript (below)
 It is hidden by default in css

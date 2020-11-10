@@ -13,6 +13,7 @@ include_once ('../phpHelpers/header.php');
         }
 
     </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <div style="padding-left: 40%;padding-right: 25%">
     <br>
