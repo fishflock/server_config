@@ -37,6 +37,7 @@ if (isset($_POST['runFileName'])) {
 
 include_once('deleteFile.php');
 include_once('../phpHelpers/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
 ?>
 <html>
 <body>
@@ -59,7 +60,7 @@ include_once('../phpHelpers/header.php');
             $name = basename($cur);
             echo "<tr>";
             echo "<td>" . $name . "</td>";
-            echo "<td>" . $cur->getSize() . "</td>";
+            echo "<td>" . formatSizeUnits($cur->getSize()) . "</td>";
             echo "<td>" .  date ("Y-m-d H:i:s",filemtime($cur->getPathname()))  . "</td>";
             echo "<td>" . "<form method='post'>";
             echo " <button id='btnRunFile' name='runFile' value=$name type='button'>Create Visualization </td>";

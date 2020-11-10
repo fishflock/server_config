@@ -3,6 +3,10 @@ if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
     header('location: registration/login.php');
 }
+if (!isset($_SESSION['uid'])) {
+    $_SESSION['msg'] = "You must log in first";
+    header('location: registration/login.php');
+}
 
 $uid = $_SESSION['uid'];
 if (isset($_SESSION['uid'])){
@@ -13,6 +17,7 @@ if (!is_dir($directory)) {
 
 include_once('runFile.php');
 include_once('deleteFile.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
 ?>
 
 <html>
@@ -35,7 +40,7 @@ include_once('deleteFile.php');
             $name = basename($cur);
             echo "<tr>";
             echo "<td>" . $name . "</td>";
-            echo "<td>" . $cur->getSize() . "</td>";
+            echo "<td>" . formatSizeUnits($cur->getSize()) . "</td>";
 
             echo "<td> <button id='btnRunFile' name='runFile' value=$name type='button'>Run GOBS on this File</td>";
 
