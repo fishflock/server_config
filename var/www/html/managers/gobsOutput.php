@@ -24,9 +24,16 @@ if (isset($_POST['runFileName'])) {
     $outputFilePath = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $uid . "/x_output/" . pathinfo($_POST['runFileName'])['filename'].'.png'  ;
 
     $validWeightParams = array("weight", "close", "eigen","between");
-
+    $validGroupParams = array("lpa","blondel");
+    $validLayoutParams = array("spring", "fa2");
     //check for valid param
-    $params = (in_array($_POST['param1'], $validWeightParams) ? $_POST['param1'] : "");
+    $weightParam = (in_array($_POST['param1'], $validWeightParams) ? $_POST['param1'] : "");
+    $groupParam = (in_array($_POST['param2'], $validGroupParams) ? $_POST['param2'] : "");
+    $layoutParam = (in_array($_POST['param3'], $validLayoutParams) ? $_POST['param3'] : "");
+
+
+    $params = $weightParam . ' '. $groupParam .' '.$layoutParam ;
+
 
     if (is_file($filePath)) {
         $newProcess = new Process("create", $_SESSION['uid'], $_POST['runFileName'], date(time()), null, "x", $outputFilePath, $params);
@@ -90,8 +97,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
 </body>
 </html>
 <!---
-This is the run file popup.  It uses a div that is shown/hidden with javascript (below)
-It is hidden by default in css
+This is the run file popup for NetworkX Params
 --->
 
 <link rel='stylesheet' href="popupStyle.css">
@@ -111,6 +117,18 @@ It is hidden by default in css
                 <option value="close">Close</option>
                 <option value="eigen">Eigen Value</option>
                 <option value="between">Weight</option>
+            </select>
+
+            <label for="popupNumber2">Grouping Method:</label>
+            <select id='popupNumber2' name='param2' >
+                <option value="lpa">Label Propagation</option>
+                <option value="blondel">Blondel</option>
+            </select>
+
+            <label for="popupNumber3">Layout:</label>
+            <select id='popupNumber3' name='param3' >
+                <option value="spring">Spring (Fruchterman-Reingold)</option>
+                <option value="fa2">Force Atlas 2</option>
             </select>
 
             <br><br>
