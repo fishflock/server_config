@@ -53,6 +53,7 @@ class Process{
                 $command = 'bash -c "exec -a ' .$this->uniqueID. ' python3 '. $this->binaryPath. ' ' . $this->filePath . ' '. $this->outputFile .' ' .($this->params !=null ? $this->params : "weight").' & $!"' ;
                 break;
         }
+        error_log($command);
         exec($command ,$op);
     }
 

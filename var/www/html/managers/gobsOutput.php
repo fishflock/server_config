@@ -26,13 +26,14 @@ if (isset($_POST['runFileName'])) {
     $validWeightParams = array("weight", "close", "eigen","between");
     $validGroupParams = array("lpa","blondel");
     $validLayoutParams = array("spring", "fa2");
+
     //check for valid param
     $weightParam = (in_array($_POST['param1'], $validWeightParams) ? $_POST['param1'] : "");
     $groupParam = (in_array($_POST['param2'], $validGroupParams) ? $_POST['param2'] : "");
     $layoutParam = (in_array($_POST['param3'], $validLayoutParams) ? $_POST['param3'] : "");
+    $scaleParam = floatval($_POST['param4']);
 
-
-    $params = $weightParam . ' '. $groupParam .' '.$layoutParam ;
+    $params = $weightParam . ' '. $groupParam .' '.$layoutParam . ' ' . floatval($_POST['param4']) . ' ' . $scaleParam;
 
 
     if (is_file($filePath)) {
@@ -108,31 +109,36 @@ This is the run file popup for NetworkX Params
     <div class="modal-content">
         <span class="close">&times;</span>
         <form method='post'>
-            <label for="popupFileName">File Name</label>
-            <input id='popupFileName' name='runFileName' type='text' value=''>
 
-            <label for="popupNumber1">Scaling Options:</label>
-            <select id='popupNumber1' name='param1' >
-                <option value="weight">Weight</option>
-                <option value="close">Close</option>
-                <option value="eigen">Eigen Value</option>
-                <option value="between">Weight</option>
-            </select>
+                <label for="popupFileName">File Name</label>
+                <input id='popupFileName' name='runFileName' type='text' value=''>
 
-            <label for="popupNumber2">Grouping Method:</label>
-            <select id='popupNumber2' name='param2' >
-                <option value="lpa">Label Propagation</option>
-                <option value="blondel">Blondel</option>
-            </select>
+                <label for="popupNumber1">Scaling Options:</label>
+                <select id='popupNumber1' name='param1' >
+                    <option value="weight">Weight</option>
+                    <option value="close">Close</option>
+                    <option value="eigen">Eigen Value</option>
+                    <option value="between">'Betweenness'</option>
+                </select>
 
-            <label for="popupNumber3">Layout:</label>
-            <select id='popupNumber3' name='param3' >
-                <option value="spring">Spring (Fruchterman-Reingold)</option>
-                <option value="fa2">Force Atlas 2</option>
-            </select>
+                <label for="popupNumber2">Grouping Method:</label>
+                <select id='popupNumber2' name='param2' >
+                    <option value="lpa">Label Propagation</option>
+                    <option value="blondel">Blondel</option>
+                </select>
 
-            <br><br>
-            <input name='submit' type='submit' id="submit" value='Create Visualization' >
+                <label for="popupNumber3">Layout:</label>
+                <select id='popupNumber3' name='param3' >
+                    <option value="spring">Spring (Fruchterman-Reingold)</option>
+                    <option value="fa2">Force Atlas 2</option>
+                </select>
+
+                <label for="popupNumber4">Scale Multiplier</label>
+                <input id='popupNumber4' name='param4' type='number' min="0.00001" max="1" step="0.00001">
+
+
+                <br><br>
+                <input name='submit' type='submit' id="submit" value='Create Visualization' >
 
         </form>
 

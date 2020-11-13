@@ -11,13 +11,13 @@ include_once ('phpHelpers/header.php');
 
 <div id="content" style="height:30%;width:100%;">
   <br>
-    <div id="visTable" style="float:left; padding-left: 10%; padding-top: 2%">
+    <div id="visTable" style="float:left; padding-left: 8%; padding-top: 2%">
         <?php include_once('managers/fileListing.php'); ?>
         <p>You may need to refresh the page if newly uploaded files are not in the list.</p>
     </div>
 
 
-    <div id="visImg" style="float: left;padding-left: 5%;padding-top: %">
+    <div id="visImg" style="float: left;">
         <?php include_once('managers/fileUpload.php'); ?>
     </div>
 </div>

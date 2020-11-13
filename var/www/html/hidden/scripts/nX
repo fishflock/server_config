@@ -1,9 +1,11 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+from fa2 import ForceAtlas2
 import numpy as np
 import random
 import sys
-import operator
+import copy
+
 
 def colors():
     return ['red',
@@ -37,6 +39,44 @@ def read_ep_matrix(gobs_in):
         i = i + 1
     return [labels, values]
 
+def blondel(G):
+    comms = []
+    for n in G:
+        comms.append([n])
+    node_moved = True
+    while(node_moved):
+        #print(comms)
+        #print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+        node_moved = False
+        for n in G:
+            n_comm = []
+
+            for c in comms:
+                if n in c:
+                    n_comm = c
+
+            max_mod = nx.algorithms.community.quality.modularity(G, comms)
+            new_comm = n_comm
+
+
+            for m in G.neighbors(n):
+                for c in comms:
+                    if (m in c and c != n_comm):
+                        comms_temp = copy.deepcopy(comms)
+                        comms_temp[comms_temp.index(n_comm)].remove(n)
+                        comms_temp[comms_temp.index(c)].append(n)
+                        mod = nx.algorithms.community.quality.modularity(G, comms_temp)
+                        if (max_mod < mod):
+                            max_mod = mod
+                            new_comm = c
+                            node_moved = True
+
+            if(new_comm != n_comm):
+                comms[comms.index(n_comm)].remove(n)
+                comms[comms.index(new_comm)].append(n)
+    return comms
+
+
 def centrality(G, c):
     if(c == 'eigen'):
         return nx.algorithms.centrality.eigenvector_centrality_numpy(G)
@@ -45,7 +85,7 @@ def centrality(G, c):
     elif (c == 'between'):
         return nx.algorithms.centrality.betweenness_centrality_source(G)
 
-def graph(G, nx_out, scale_in):
+def graph(G, nx_out, scale_in, sort_in, layout_in, scale_mult):
 
     node_arr = [] #stores nodes with total weight < 1
     max_weight = 0
@@ -76,18 +116,26 @@ def graph(G, nx_out, scale_in):
     #remove nodes with weight < 1 (no connections)
     G.remove_nodes_from(node_arr)
 
-    #perform Label Propogation Algorithm to group nodes
+    #use user input to determine how to group nodes into communities
     groups = []
-    lpa = nx.algorithms.community.label_propagation.asyn_lpa_communities(G)
-    for x in lpa:
-        groups.append(x)
+    if(sort_in == 'lpa'):
+        lpa = nx.algorithms.community.label_propagation.asyn_lpa_communities(G)
+        for x in lpa:
+            groups.append(x)
+    elif(sort_in == 'blondel'):
+        groups = blondel(G)
 
     #create layout of nodes
     #k is optimal distance between nodes
     #seed sets the 'randomness' of the layout to be constant
     #iterations determine how many times algorithm is run,
     #    which results in closer nodes that are more strongly connected
-    layout = nx.spring_layout(G, k=1, seed=24, iterations=40)
+    if(layout_in == 'spring'):
+        layout = nx.spring_layout(G, k=1, seed=24, iterations=40)
+    #layout = nx.spectral_layout(G)
+    #layout = nx.kamada_kawai_layout(G)
+    elif(layout_in == 'fa2'):
+        layout = ForceAtlas2().forceatlas2_networkx_layout(G, pos=None, iterations=40)
 
     #change size of output window
     fig, ax = plt.subplots(figsize=(15,10))
@@ -100,7 +148,7 @@ def graph(G, nx_out, scale_in):
         c_dic = centrality(G, scale_in)
         scale = 15000/max(c_dic.values())
     else:
-        scale = 15000/max_weight
+        scale = scale_mult * (15000/max_weight)
 
     #draw the graph
     i = 0
@@ -150,7 +198,7 @@ def graph(G, nx_out, scale_in):
 
 #function for testing with Facebook data
 def face():
-    ep_in = open("Facebook1.csv")
+    ep_in = open("Facebook3.csv")
     G = nx.MultiDiGraph()
 
     mapping = {}
@@ -167,13 +215,16 @@ def face():
             mapping[i] = row[3]
             i = i + 1
     print("DONE PARSING")
-    graph(G, 'face.png')
+    graph(G, 'face.png', 'weight', 'blondel', 'spring')
 
 ################################################################
 #main function, reads input from output of GOBS, outputs networkx as .png
 gobs_in = sys.argv[1]
 nx_out = sys.argv[2]
 scale_in = sys.argv[3]
+sort_in = sys.argv[4]
+layout_in = sys.argv[5]
+scale_mult = float(sys.argv[6])
 
 #read in values from epsilon state matrix, separate into labels and data
 ep_arr = read_ep_matrix(gobs_in)
@@ -191,5 +242,5 @@ for l in labels:
     i = i + 1
 G = nx.relabel_nodes(G,mapping)
 
-graph(G, nx_out, scale_in)
+graph(G, nx_out, scale_in, sort_in, layout_in, scale_mult)
 ################################################################
