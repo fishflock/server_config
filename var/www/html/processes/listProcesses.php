@@ -12,6 +12,10 @@ include_once('processManagement.php');
 
 $uid = $_SESSION['uid'];
 
+$activePage = basename($_SERVER['SCRIPT_NAME']);
+$tableTitle = ($activePage=='gobsOutput.php'?'GOBS Process History': 'SNA Process History');
+$exe = ($activePage=='gobsOutput.php'? 'g': 'x');
+
 if(isset($_POST['cancel'])){
 
     $process = new Process("check", $_SESSION['uid'], null, null, $_POST['uniqueID']);
@@ -22,7 +26,7 @@ if(isset($_POST['cancel'])){
     }
 }
 if(isset($_POST['record'])){
-    $process = new Process("check",$_SESSION['uid'],null, null, $_POST['uniqueID']);
+    $process = new Process("check",$_SESSION['uid'],null, null, $_POST['uniqueID'], $exe);
     remove_process($_SESSION['uid'], $_POST['uniqueID']);
 }
 
@@ -30,7 +34,7 @@ if(isset($_POST['record'])){
 <html>
 <body>
 <table>
-    <h2>GOBS Process History</h2>
+    <h2><?php echo $tableTitle ?></h2>
     <hr>
     <table border='2'>
         <tr>
@@ -41,12 +45,20 @@ if(isset($_POST['record'])){
         </tr>
 
         <?php
-        $result = return_process($_SESSION['uid']);
+
+
+        $result = return_process($_SESSION['uid'], $exe);
         foreach ($result as $curr) {
             $process = new Process("check",$_SESSION['uid'], $curr['file_name'],$curr['spawn_time'], $curr['uniqueID']);
             $uniqueID = $process->getUniqueID();
             echo "<tr>";
-            echo "<td> " . $curr['file_name'] . " </td>";
+            if($exe =='g'){
+                $sourceFileName = substr($curr['file_name'], 0, -4) ;
+            }else if ($exe =='x'){
+                $sourceFileName = substr($curr['file_name'], 0, -4);
+            }
+
+            echo "<td> " . $sourceFileName . " </td>";
             echo "<td> " . $curr['spawn_time'] . " </td>";
 
             if($process->status()){

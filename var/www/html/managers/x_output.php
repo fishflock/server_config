@@ -54,20 +54,21 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
         $it = new DirectoryIterator($directory);
         foreach (new IteratorIterator($it) as $filename => $cur) {
             if ($it->isDot() || $it->isDir()) continue;
-            $name = basename($cur);
+            $ogName = basename($cur);
+            $name = substr(basename($cur), 0, -4 );
             echo "<tr>";
             echo "<td>" . $name . "</td>";
             echo "<td>" . formatSizeUnits($cur->getSize()) . "</td>";
             echo "<td>" . date ("Y-m-d H:i:s",filemtime($cur->getPathname())) . "</td>";
-            echo "<td> <button id='btnViewFile' name='viewFile' value=$name type='button'>View on Page</td>";
+            echo "<td> <button id='btnViewFile' name='viewFile' value=$ogName type='button'>View on Page</td>";
 
             echo "<td>" . "<form method='post' action='/phpHelpers/downloadFile.php'>";
-            echo " <input name='fileName' type='text' value=$name hidden>";
+            echo " <input name='fileName' type='text' value=$ogName hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
             echo "</td>";
 
             echo "<td>" . "<form method='post'>";
-            echo " <input name='delXFileName' type='text' value=$name hidden>";
+            echo " <input name='delXFileName' type='text' value=$ogName hidden>";
             echo " <input name='submit' type='submit' value='Delete File'></form>";
 
             echo "</td>";
@@ -77,6 +78,12 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
         }
         ?>
     </table>
+    </div>
+    <div style="float: left;padding-top: 2%;padding-left: 5%">
+    <?php
+    include_once ('../processes/listProcesses.php');
+    include_once('../processes/process.php');
+    ?>
     </div>
     <div id="visImg" style="float: left;padding-left: 5%">
         <img id="displayImage" src="" style="width: auto; height:auto" visibility="hidden">

@@ -20,7 +20,7 @@ if (isset($_POST['runFileName'])) {
 
     if (is_file($filePath)) {
         $newProcess = new Process("create", $_SESSION['uid'], $_POST['runFileName'], date(time()), null, "gobs", $outputFilePath, $params);
-        register_process($_SESSION['uid'], $_POST['runFileName'], $newProcess->getUniqueID());
+        register_process($_SESSION['uid'], $_POST['runFileName'], $newProcess->getUniqueID(), 'g');
     }
     header("location: /managers/gobsOutput.php");
 
