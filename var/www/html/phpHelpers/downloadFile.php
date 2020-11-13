@@ -2,10 +2,10 @@
 session_start();
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
-    header('location: '.$_SERVER['DOCUMENT_ROOT'].'/registration/login.php');
+    header('location: /registration/login.php');
 }
 if (!isset($_SESSION['uid'])) {
-    header("location: registration/login.php");
+    header("location: /registration/login.php");
 }
 
 $uid = $_SESSION['uid'];

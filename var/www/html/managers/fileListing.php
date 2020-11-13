@@ -1,11 +1,11 @@
 <?php
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
-    header('location: registration/login.php');
+    header('location: /registration/login.php');
 }
 if (!isset($_SESSION['uid'])) {
     $_SESSION['msg'] = "You must log in first";
-    header('location: registration/login.php');
+    header('location: /registration/login.php');
 }
 
 $uid = $_SESSION['uid'];
@@ -15,8 +15,8 @@ if (!is_dir($directory)) {
     mkdir($directory, 0775);
 }
 
-include_once('runFile.php');
-include_once('deleteFile.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/runFile.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/deleteFile.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
 ?>
 

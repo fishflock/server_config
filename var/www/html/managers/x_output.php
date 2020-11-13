@@ -22,8 +22,8 @@ if (!is_dir($directory)) {
 include_once($_SERVER['DOCUMENT_ROOT'].'/processes/process.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
 
-include_once('deleteFile.php');
-include_once('../phpHelpers/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/deleteFile.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/header.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
 ?>
 <html>
@@ -61,7 +61,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
             echo "<td>" . date ("Y-m-d H:i:s",filemtime($cur->getPathname())) . "</td>";
             echo "<td> <button id='btnViewFile' name='viewFile' value=$name type='button'>View on Page</td>";
 
-            echo "<td>" . "<form method='post' action='/managers/downloadFile.php'>";
+            echo "<td>" . "<form method='post' action='/phpHelpers/downloadFile.php'>";
             echo " <input name='fileName' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
             echo "</td>";
@@ -97,7 +97,7 @@ On page image Loader
     $("button").click(function() {
         var fired_button = $(this).val();
         //update popup filename
-        document.getElementById("displayImage").src = "/managers/downloadFile.php?&fileName=" +fired_button;
+        document.getElementById("displayImage").src = "/phpHelpers/downloadFile.php?&fileName=" +fired_button;
         document.getElementById("displayImage").visibility = "visbile";
     });
 

@@ -40,7 +40,7 @@
 
 </div>
 
-<?php session_start();
+<?php
 if(!isset($_SESSION['uid'])){header("location: /registration/login.php");}
 else{$sess=$_SESSION['uid'];}
 
@@ -48,7 +48,7 @@ else{$sess=$_SESSION['uid'];}
 <script>
     var tempFileVal = '<?php echo $sess ?>';
     var r = new Resumable({
-        target: 'managers/upload.php',
+        target: 'phpHelpers/upload.php',
         testChunks: true,
         query: {id:tempFileVal}
     });

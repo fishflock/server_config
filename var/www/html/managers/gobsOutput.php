@@ -43,9 +43,9 @@ if (isset($_POST['runFileName'])) {
     header("location: /managers/x_output.php");
 }
 
-include_once('deleteFile.php');
+include_once('../phpHelpers/deleteFile.php');
 include_once('../phpHelpers/header.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
+include_once('../phpHelpers/fileSize.php');
 ?>
 <html>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -75,7 +75,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
             echo "<td>" . "<form method='post'>";
             echo " <button id='btnRunFile' name='runFile' value=$name type='button'>Create Visualization </td>";
 
-            echo "<td> <form method='post' action='/managers/downloadFile.php'>";
+            echo "<td> <form method='post' action='/phpHelpers/downloadFile.php'>";
             echo " <input name='fileNameTXT' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
             echo "</td>";

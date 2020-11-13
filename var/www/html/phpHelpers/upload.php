@@ -152,7 +152,7 @@ if (!empty($_FILES)) foreach ($_FILES as $file) {
     // init the destination file (format <filename.ext>.part<#chunk>
     // the file is stored in a temporary directory
     if(isset($_POST['resumableIdentifier']) && trim($_POST['resumableIdentifier'])!=''){
-        $temp_dir = '/var/www/html/hidden/uploads/temp/'.$_POST['resumableIdentifier'];
+        $temp_dir = $_SERVER['DOCUMENT_ROOT'].'/hidden/uploads/temp/'.$_POST['resumableIdentifier'];
     }
     $dest_file = $temp_dir.'/'.$_POST['resumableFilename'].'.part'.$_POST['resumableChunkNumber'];
 
