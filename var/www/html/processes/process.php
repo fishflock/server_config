@@ -9,6 +9,8 @@ class Process{
     private $uniqueID;
     private $params;//space separated string with cmd line params
 
+    private $PID;
+
 
     public function __construct($processStage, $uid, $fileName=null, $spawnTime=null, $uniqueID=null, $binary=null, $outputFile=null, $params=null){
 
@@ -38,6 +40,7 @@ class Process{
             case "check":
                 $this->fileName = $fileName;
                 $this->uniqueID = $uniqueID;
+                $this->PID = $uniqueID;
                 break;
         }
 
@@ -47,14 +50,24 @@ class Process{
         $command = "";
         switch($this->binary){
             case "gobs":
-                $command = 'bash -c "exec -a ' .$this->uniqueID. ' '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile . ' '.($this->params !=null ? $this->params : "1 1 1") .' & $!"';
+                $command = 'nice -n 10 '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile . ' '.($this->params !=null ? $this->params : "1 1 1") .' > /dev/null 2>&1 &';
                 break;
             case "x":
-                $command = 'bash -c "exec -a ' .$this->uniqueID. ' python3 '. $this->binaryPath. ' ' . $this->filePath . ' '. $this->outputFile .' ' .($this->params !=null ? $this->params : "weight").' & $!"' ;
+                $command = 'nice -n 10 python3 '. $this->binaryPath. ' ' . $this->filePath . ' '. $this->outputFile .' ' .($this->params !=null ? $this->params : "weight").' > /dev/null 2>&1 &' ;
                 break;
         }
-        error_log($command);
-        exec($command ,$op);
+        $descriptorspec = [
+            0 => ['pipe', 'r'],
+            1 => ['pipe', 'w'],
+            2 => ['pipe', 'w']
+        ];
+        $proc = proc_open($command, $descriptorspec, $pipes);
+        $proc_details = proc_get_status($proc);
+        $pid = (int)$proc_details['pid'] +1;
+        //known issue with proc_open, returns pid-1
+
+        $this->PID = $pid;
+        $this->uniqueID = $pid;
     }
 
     public function getUniqueID(){
@@ -62,15 +75,22 @@ class Process{
     }
 
     public function status(){
-        $command = 'pgrep '.$this->uniqueID. ' | xargs --no-run-if-empty ps fp';
+        $command = 'ps -p '.$this->uniqueID. ' -o etime';
         exec($command,$op);
+        //will return 'elapsed <time>'  or just 'elapsed' if the process is not running
         if (!isset($op[1]))return false;
         else return true;
     }
 
+    //should only be called after status is successful
+    public function elapsed(){
+        $command = 'ps -p '.$this->uniqueID. ' -o etime';
+        exec($command,$op);
+        return $op[1];
+    }
 
     public function stop(){
-        $command = 'pkill -f '.$this->uniqueID;
+        $command = 'kill '.$this->uniqueID;
         exec($command);
         if ($this->status() == false)return true;
         else return false;

@@ -46,11 +46,12 @@ if(isset($_POST['record'])){
             $process = new Process("check",$_SESSION['uid'], $curr['file_name'],$curr['spawn_time'], $curr['uniqueID']);
             $uniqueID = $process->getUniqueID();
             echo "<tr>";
-            echo "<td>" . $curr['file_name'] . "</td>";
-            echo "<td>" . $curr['spawn_time'] . "</td>";
+            echo "<td> " . $curr['file_name'] . " </td>";
+            echo "<td> " . $curr['spawn_time'] . " </td>";
 
             if($process->status()){
-                echo "<td> Running  </td>";
+                $elapsed = $process->elapsed();
+                echo "<td> Running for:  $elapsed</td>";
                 echo "<td>" . "<form method='post'>";
                 echo " <input name='uniqueID' type='number' value='$uniqueID' hidden>";
                 echo " <input name='cancel' type='submit' value='Cancel'></form>";
