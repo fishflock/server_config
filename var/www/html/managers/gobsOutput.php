@@ -31,9 +31,8 @@ if (isset($_POST['runFileName'])) {
     $weightParam = (in_array($_POST['param1'], $validWeightParams) ? $_POST['param1'] : "");
     $groupParam = (in_array($_POST['param2'], $validGroupParams) ? $_POST['param2'] : "");
     $layoutParam = (in_array($_POST['param3'], $validLayoutParams) ? $_POST['param3'] : "");
-    $scaleParam = floatval($_POST['param4']);
 
-    $params = $weightParam . ' '. $groupParam .' '.$layoutParam . ' ' . floatval($_POST['param4']) . ' ' . $scaleParam;
+    $params = $weightParam . ' '. $groupParam .' '.$layoutParam . ' ' . floatval($_POST['param4']);
 
 
     if (is_file($filePath)) {
@@ -67,22 +66,22 @@ include_once('../phpHelpers/fileSize.php');
         $it = new DirectoryIterator($directory);
         foreach (new IteratorIterator($it) as $filename => $cur) {
             if ($it->isDot() || $it->isDir() || endsWith(basename($cur),"_c_mat.txt")) continue;
-            $ogName = basename($cur);
-            $name = substr(basename($cur), 0, -4 );
+            $name = basename($cur);
+            $sourceFileName = substr($name, 0, -4 );
             echo "<tr>";
-            echo "<td>" . $name . "</td>";
+            echo "<td>" . $sourceFileName . "</td>";
             echo "<td>" . formatSizeUnits($cur->getSize()) . "</td>";
             echo "<td>" .  date ("Y-m-d H:i:s",filemtime($cur->getPathname()))  . "</td>";
             echo "<td>" . "<form method='post'>";
-            echo " <button id='btnRunFile' name='runFile' value=$ogName type='button'>Create Visualization </td>";
+            echo " <button id='btnRunFile' name='runFile' value=$name type='button'>Create Visualization </td>";
 
             echo "<td> <form method='post' action='/phpHelpers/downloadFile.php'>";
-            echo " <input name='fileNameTXT' type='text' value=$ogName hidden>";
+            echo " <input name='fileNameTXT' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
             echo "</td>";
 
             echo "<td>" . "<form method='post'>";
-            echo " <input name='delGobsFileName' type='text' value=$ogName hidden>";
+            echo " <input name='delGobsFileName' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Delete File'></form>";
 
             echo "</td>";
@@ -116,9 +115,8 @@ include_once('../processes/process.php');
         foreach (new IteratorIterator($it) as $filename => $cur) {
             if ($it->isDot() || $it->isDir() || !endsWith(basename($cur),"_c_mat.txt")) continue;
             $name = basename($cur);
-            $ogFileName = substr(basename($cur), 0,-10);
             echo "<tr>";
-            $sourceFileName = substr(basename($cur), 0, -10);
+            $sourceFileName = substr($name, 0, -10);
             echo "<td>" . $sourceFileName . "</td>";
 
             echo "<td>" . formatSizeUnits($cur->getSize()) . "</td>";

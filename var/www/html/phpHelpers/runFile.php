@@ -16,7 +16,7 @@ if (isset($_POST['runFileName'])) {
     $filePath = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $uid . "/" . basename($_POST['runFileName']);
     $outputFilePath = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $uid . "/gobs_output/" . pathinfo($_POST['runFileName'])['filename'].'.txt' ;
 
-    $params = floatval($_POST['param1']) . ' ' . floatval($_POST['param2']) . ' ' . floatval($_POST['param3']);
+    $params = floatval($_POST['param1']) . ' ' . floatval($_POST['param2']) . ' ' . floatval($_POST['param3']) . ' ' . floatval($_POST['param4']) . ' ' . floatval($_POST['param5']);
 
     if (is_file($filePath)) {
         $newProcess = new Process("create", $_SESSION['uid'], $_POST['runFileName'], date(time()), null, "gobs", $outputFilePath, $params);

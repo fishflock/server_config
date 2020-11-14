@@ -66,15 +66,15 @@ if(isset($_GET["fileName"])){
         die("Invalid file name!");
     }
 }
-
+error_log("test");
 if(isset($_POST["fileNameTXT"])){
     $file =  $_POST['fileNameTXT'];
-
     /* Test whether the file name contains illegal characters
     such as "../" using the regular expression */
     if(preg_match('/^[^.][-a-z0-9_.]+[a-z]$/i', $file)){
         $filepath = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $uid . "/gobs_output/" . $file;
         // Process download
+        error_log($filepath);
         if(file_exists($filepath)) {
             header('Content-Description: File Transfer');
             header('Content-Type: txt/plain');
