@@ -67,14 +67,14 @@ if(isset($_GET["fileName"])){
     }
 }
 error_log("test");
-if(isset($_POST["fileNameTXT"])){
-    $file =  $_POST['fileNameTXT'];
+if(isset($_POST["fileNameTXT"]) || isset($_POST["fileNameTXT1"])){
+    $file =  (isset($_POST["fileNameTXT"]) ? $_POST['fileNameTXT']: $_POST['fileNameTXT1']);
+
     /* Test whether the file name contains illegal characters
     such as "../" using the regular expression */
     if(preg_match('/^[^.][-a-z0-9_.]+[a-z]$/i', $file)){
         $filepath = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $uid . "/gobs_output/" . $file;
         // Process download
-        error_log($filepath);
         if(file_exists($filepath)) {
             header('Content-Description: File Transfer');
             header('Content-Type: txt/plain');

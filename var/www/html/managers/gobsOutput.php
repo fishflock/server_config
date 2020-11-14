@@ -67,17 +67,18 @@ include_once('../phpHelpers/fileSize.php');
         foreach (new IteratorIterator($it) as $filename => $cur) {
             if ($it->isDot() || $it->isDir() || endsWith(basename($cur),"_c_mat.txt")) continue;
             $name = basename($cur);
-            $sourceFileName = substr($name, 0, -4 );
             echo "<tr>";
+            $sourceFileName = substr($name, 0, -4);
             echo "<td>" . $sourceFileName . "</td>";
+
             echo "<td>" . formatSizeUnits($cur->getSize()) . "</td>";
             echo "<td>" .  date ("Y-m-d H:i:s",filemtime($cur->getPathname()))  . "</td>";
-            echo "<td>" . "<form method='post'>";
-            echo " <button id='btnRunFile' name='runFile' value=$name type='button'>Create Visualization </td>";
 
-            echo "<td> <form method='post' action='/phpHelpers/downloadFile.php'>";
-            echo " <input name='fileNameTXT' type='text' value=$name hidden>";
-            echo " <input name='submit' type='submit' value='Download'></form>";
+            echo "<td><button id='btnRunFile' name='runFile' value=$name type='button'>Create Visualization </td>";
+
+            echo "<td> <form method='post' action='/phpHelpers/downloadFile.php' id='form2'>";
+            echo " <input name='fileNameTXT1' type='text' value=$name hidden>";
+            echo " <input name='submit' type='submit' value='Download' form='form2'></form>";
             echo "</td>";
 
             echo "<td>" . "<form method='post'>";
@@ -122,9 +123,9 @@ include_once('../processes/process.php');
             echo "<td>" . formatSizeUnits($cur->getSize()) . "</td>";
             echo "<td>" .  date ("Y-m-d H:i:s",filemtime($cur->getPathname()))  . "</td>";
 
-            echo "<td> <form method='post' action='/phpHelpers/downloadFile.php'>";
-            echo " <input name='fileNameTXT' type='text' value=$name hidden>";
-            echo " <input name='submit' type='submit' value='Download'></form>";
+            echo "<td> <form method='post' action='/phpHelpers/downloadFile.php' id='form2'>";
+            echo " <input name='fileNameTXT1' type='text' value=$name hidden>";
+            echo " <input name='submit' type='submit' value='Download' form='form2'></form>";
             echo "</td>";
 
             echo "<td>" . "<form method='post'>";
@@ -213,4 +214,3 @@ This is the run file popup for NetworkX Params
         }
     }
 </script>
-
