@@ -77,16 +77,13 @@ It is hidden by default in css
             <input id='popupNumber1' name='param1' type='number' min="0" max="1" >
 
             <label for="popupNumber2">Alpha Value:</label>
-            <input id='popupNumber2' name='param2' type='number' min="0.00001" max="100" step="0.00001">
+            <input id='popupNumber2' name='param2' type='number' min="0.00001" max="1" step="0.00001">
 
-            <label for="popupNumber3">Vectory History Length:</label>
+            <label for="popupNumber3">Vector History Length:</label>
             <input id='popupNumber3' name='param3' type='number' min="5" max="15">
 
             <label for="popupNumber4">Number of Directions:</label>
-            <select id='popupNumber4' name='param4' >
-                <option value="4">4</option>
-                <option value="8">8</option>
-            </select>
+            <input id='popupNumber4' name='param4' type='number' min="2" max="10">
 
             <label for="popupNumber5">Statistical Comparison Method:</label>
             <select id='popupNumber5' name='param5' >
