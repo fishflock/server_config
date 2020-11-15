@@ -76,9 +76,9 @@ include_once('../phpHelpers/fileSize.php');
 
             echo "<td><button id='btnRunFile' name='runFile' value=$name type='button'>Create Visualization </td>";
 
-            echo "<td> <form method='post' action='/phpHelpers/downloadFile.php' id='form2'>";
-            echo " <input name='fileNameTXT1' type='text' value=$name hidden>";
-            echo " <input name='submit' type='submit' value='Download' form='form2'></form>";
+            echo "<td> <form method='post' action='/phpHelpers/downloadFile.php' id='form1'>";
+            echo " <input name='fileNameTXT' type='text' value=$name hidden>";
+            echo " <input name='submit' type='submit' value='Download' form='form1'></form>";
             echo "</td>";
 
             echo "<td>" . "<form method='post'>";
