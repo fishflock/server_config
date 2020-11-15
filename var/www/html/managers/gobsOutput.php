@@ -116,6 +116,7 @@ include_once('../processes/process.php');
         foreach (new IteratorIterator($it) as $filename => $cur) {
             if ($it->isDot() || $it->isDir() || !endsWith(basename($cur),"_c_mat.txt")) continue;
             $name = basename($cur);
+
             echo "<tr>";
             $sourceFileName = substr($name, 0, -10);
             echo "<td>" . $sourceFileName . "</td>";

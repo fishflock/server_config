@@ -66,7 +66,6 @@ if(isset($_GET["fileName"])){
         die("Invalid file name!");
     }
 }
-error_log("test");
 if(isset($_POST["fileNameTXT"]) || isset($_POST["fileNameTXT1"])){
     $file =  (isset($_POST["fileNameTXT"]) ? $_POST['fileNameTXT']: $_POST['fileNameTXT1']);
 
