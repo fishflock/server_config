@@ -68,6 +68,7 @@ if(isset($_GET["fileName"])){
 }
 if(isset($_POST["fileNameTXT"]) || isset($_POST["fileNameTXT1"])){
     $file =  (isset($_POST["fileNameTXT"]) ? $_POST['fileNameTXT']: $_POST['fileNameTXT1']);
+
     /* Test whether the file name contains illegal characters
     such as "../" using the regular expression */
     if(preg_match('/^[^.][-a-z0-9_.]+[a-z]$/i', $file)){
