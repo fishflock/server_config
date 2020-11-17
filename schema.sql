@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.31, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.32, for Linux (x86_64)
 --
 -- Host: localhost    Database: registration
 -- ------------------------------------------------------
--- Server version	5.7.31-0ubuntu0.18.04.1
+-- Server version       5.7.32-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,15 +16,24 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `processes`
 --
 
-CREATE DATABASE registration;
+DROP TABLE IF EXISTS `processes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `processes` (
+  `uid` int(10) unsigned DEFAULT NULL,
+  `spawn_time` datetime DEFAULT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
+  `uniqueID` varchar(512) DEFAULT NULL,
+  `executable` varchar(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-
-CREATE USER 'phpadmin'@'localhost' IDENTIFIED BY 'zxcasd123';
-GRANT ALL PRIVILEGES ON *.* TO 'phpadmin'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
+--
+-- Table structure for table `users`
+--
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -35,17 +44,7 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `processes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `processes` (
-    `uid` INT UNSIGNED,
-    `pid` INT UNSIGNED,
-    `spawn_time` DATETIME,
-    `file_name` varchar(255)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +56,8 @@ CREATE TABLE `processes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-16 19:54:17
+
+ALTER USER 'phpadmin'@'localhost' IDENTIFIED BY 'zxcasd123';
+
+
+-- Dump completed on 2020-11-16 17:27:09
