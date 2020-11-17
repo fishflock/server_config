@@ -1,5 +1,5 @@
 ## Repository Info:
-This Repository represents the configuration of a LAMP stack on Ubuntu.  Apache configuration and webpages included.
+This Repository represents the configuration of a LAMP stack on Ubuntu 18.04,  Apache configuration and webpages included.
 
 
 
@@ -20,7 +20,7 @@ This is meant to be installed on a fresh ubuntu installation (tested with 18.04)
 	- `$ sudo chmod 775 /var/www/html`
 
 	
-3. Clone this repository:
+3. Clone this repository on the machine:
 	- `$ cd /`
 	- `$ git init .`
 	- `$ git remote add origin git://github.com/fishflock/server_config.git`
@@ -41,6 +41,8 @@ You may need to restart apache `sudo systemctl restart apache2`
 7. Install Python Dependencies:
 	- `$ sudo apt-get install python3-pip`
 	- `$ sudo python3 -m pip install networkx matplotlib fa2 numpy`
+
+Test that the server is functional.
 
 
 
