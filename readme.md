@@ -3,9 +3,8 @@ This Repository represents the configuration of a LAMP stack on Ubuntu.  Apache 
 
 
 
-THIS SECTION IS NOT FINISHED
 ### Download and Configuration:
-This is meant to be installed on a fresh ubuntu installation, and the install script will not be careful about overwriting files etc. Run it at your own risk on an existing server.
+This is meant to be installed on a fresh ubuntu installation (tested with 18.04).  Cloning the git repo as written below will not be careful about overwriting files etc. Run it at your own risk on an existing server.
 
 1. Install git: $ sudo apt-get -y install git
 2. Install the following dependencies
@@ -38,6 +37,11 @@ This is meant to be installed on a fresh ubuntu installation, and the install sc
 
 6. Check that the server is running on localhost:80  
 You may need to restart apache `sudo systemctl restart apache2`
+
+7. Install Python Dependencies:
+	- `$ sudo apt-get install python3-pip`
+	- `$ sudo python3 -m pip install networkx matplotlib fa2 numpy`
+
 
 
 
