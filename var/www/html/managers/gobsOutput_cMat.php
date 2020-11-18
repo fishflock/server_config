@@ -1,6 +1,7 @@
 <?php
 
-include_once('../processes/listProcesses.php');
+
+
 include_once('../processes/process.php');
 include_once('../phpHelpers/fileSize.php');
 include_once('../phpHelpers/deleteFile.php');

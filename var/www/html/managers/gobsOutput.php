@@ -99,7 +99,9 @@ include_once('../phpHelpers/fileSize.php');
 </div>
 
 <?php include_once('./gobsOutput_cMat.php'); ?>
-}
+<div style="float: left; padding-left: 10%">
+<?php include_once('../processes/listProcesses.php'); ?>
+</div>
 </body>
 </html>
 <!---
@@ -120,10 +122,10 @@ This is the run file popup for NetworkX Params
 
                 <label for="popupNumber1">Scaling Options:</label>
                 <select id='popupNumber1' name='param1' >
-                    <option value="weight">Total Edge Weight</option>
-                    <option value="close">Closeness Centrality</option>
-                    <option value="eigen">Eigenvector Centrality</option>
-                    <option value="between">Between-ness Centrality</option>
+                    <option value="weight">Weight</option>
+                    <option value="close">Close</option>
+                    <option value="eigen">Eigen Value</option>
+                    <option value="between">'Betweenness'</option>
                 </select>
 
                 <label for="popupNumber2">Grouping Method:</label>
