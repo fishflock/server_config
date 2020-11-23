@@ -1,4 +1,4 @@
-<?php include_once('server.php') ?>
+<?php include_once('../db/loginManagement.php') ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +14,11 @@
     <?php include_once('errors.php'); ?>
     <div class="input-group">
         <label>Username</label>
-        <input type="text" name="username" value="<?php echo $username; ?>">
+        <input type="text" name="username" value="">
     </div>
     <div class="input-group">
         <label>Email</label>
-        <input type="email" name="email" value="<?php echo $email; ?>">
+        <input type="email" name="email" value="">
     </div>
     <div class="input-group">
         <label>Password</label>

@@ -15,9 +15,9 @@ if (!is_dir($directory)) {
     mkdir($directory, 0775);
 }
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/runFile.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/deleteFile.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
+include_once('./phpHelpers/responses/runFile.php');//receives post data with $_POST['runFileName']
+include_once('./phpHelpers/responses/deleteFile.php');
+include_once('./phpHelpers/helperFunctions.php');
 ?>
 
 <html>
@@ -57,16 +57,18 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
     </table>
 </body>
 </html>
-<!---
+<?php
+/*
 This is the run file popup.  It uses a div that is shown/hidden with javascript (below)
-It is hidden by default in css
---->
+It is hidden by default in the css styling for this page.
+*/
 
-<link rel='stylesheet' href="../managers/popupStyle.css">
+?>
+<link rel='stylesheet' href="/pages/managers/popupStyle.css">
 
 <div id="myModal" class="modal">
 
-    <!-- Modal content -->
+
     <div class="modal-content">
         <span class="close">&times;</span>
         <form method='post'>
@@ -105,7 +107,7 @@ It is hidden by default in css
 
     $("button").click(function() {
         var fired_button = $(this).val();
-        //update popup filename
+
         document.getElementById("popupFileName").setAttribute("value",fired_button);
         modal.style.display = "flex";
     });
@@ -117,7 +119,7 @@ It is hidden by default in css
     span.onclick = function() {
         modal.style.display = "none";
     }
-    //close popup if click outside of it
+
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";

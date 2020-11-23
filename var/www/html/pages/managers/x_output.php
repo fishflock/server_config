@@ -19,12 +19,12 @@ if (!is_dir($directory)) {
 
 
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/processes/process.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/processes/processManagement.php');
+include_once('../../phpHelpers/processes/process.php');
+include_once('../../phpHelpers/db/processManagement.php');
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/deleteFile.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/header.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
+include_once('../../phpHelpers/responses/deleteFile.php');
+include_once('./header.php');
+include_once('../../phpHelpers/helperFunctions.php');
 ?>
 <html>
 <head>  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -62,7 +62,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
             echo "<td>" . date ("Y-m-d H:i:s",filemtime($cur->getPathname())) . "</td>";
             echo "<td> <button id='btnViewFile' name='viewFile' value=$ogName type='button'>View on Page</td>";
 
-            echo "<td>" . "<form method='post' action='/phpHelpers/downloadFile.php'>";
+            echo "<td>" . "<form method='post' action='/phpHelpers/responses/downloadFile.php'>";
             echo " <input name='fileName' type='text' value=$ogName hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
             echo "</td>";
@@ -81,8 +81,8 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/phpHelpers/fileSize.php');
     </div>
     <div style="float: left;padding-top: 2%;padding-left: 5%">
     <?php
-    include_once ('../processes/listProcesses.php');
-    include_once('../processes/process.php');
+    include_once('listProcesses.php');
+    include_once('../../phpHelpers/processes/process.php');
     ?>
     </div>
     <div id="visImg" style="float: left;padding-left: 5%">
@@ -104,8 +104,8 @@ On page image Loader
     $("button").click(function() {
         var fired_button = $(this).val();
         //update popup filename
-        document.getElementById("displayImage").src = "/phpHelpers/downloadFile.php?&fileName=" +fired_button;
-        document.getElementById("displayImage").visibility = "visbile";
+        document.getElementById("displayImage").src = "/phpHelpers/responses/downloadFile.php?&fileName=" +fired_button;
+        document.getElementById("displayImage").visibility = "visible";
     });
 
 </script>

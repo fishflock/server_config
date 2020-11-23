@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * This is the implementation of the server side part of
  * Resumable.js client script, which sends/uploads files
@@ -17,12 +18,16 @@
  *
  * @editor Bivek Joshi (http://www.bivekjoshi.com.np)
  * @email meetbivek@gmail.com
+ *
+ *
+ * Only small changes were made to this file to work with this project,
+ * basically redefining the output paths for the intermediate and final files
  */
 
 
-////////////////////////////////////////////////////////////////////
-// THE FUNCTIONS
-////////////////////////////////////////////////////////////////////
+
+// Helper upload functions
+
 
 /**
  *
@@ -36,7 +41,7 @@ function _log($str) {
     echo $log_str;
 
     // log to file
-    if (($fp = fopen('upload_log.txt', 'a+')) !== false) {
+    if (($fp = fopen($_SERVER['DOCUMENT_ROOT'].'/hidden/uploads/upload_log.txt', 'a+')) !== false) {
         fputs($fp, $log_str);
         fclose($fp);
     }
@@ -74,7 +79,7 @@ function rrmdir($dir) {
  * @param string $chunkSize - each chunk size (in bytes)
  * @param string $totalSize - original file size (in bytes)
  */
-function createFileFromChunks($temp_dir, $fileName, $chunkSize, $totalSize,$total_files) {
+function createFileFromChunks($id, $temp_dir, $fileName, $chunkSize, $totalSize,$total_files) {
 
     // count all the parts of this file
     $total_files_on_server_size = 0;
@@ -87,8 +92,11 @@ function createFileFromChunks($temp_dir, $fileName, $chunkSize, $totalSize,$tota
     // check that all the parts are present
     // If the Size of all the chunks on the server is equal to the size of the file uploaded.
     if ($total_files_on_server_size >= $totalSize) {
+
         // create the final destination file
-        if (($fp = fopen($temp_dir.'/'.$fileName, 'w')) !== false) {
+        $final_dir = $_SERVER['DOCUMENT_ROOT']."/hidden/uploads/" . $id;
+        _log("Creating Final File in: " .$final_dir.'/'.$fileName );
+        if (($fp = fopen($final_dir.'/'.$fileName, 'w')) !== false) {
             for ($i=1; $i<=$total_files; $i++) {
                 fwrite($fp, file_get_contents($temp_dir.'/'.$fileName.'.part'.$i));
                 _log('writing chunk '.$i);
@@ -111,17 +119,16 @@ function createFileFromChunks($temp_dir, $fileName, $chunkSize, $totalSize,$tota
 }
 
 
-////////////////////////////////////////////////////////////////////
-// THE SCRIPT
-////////////////////////////////////////////////////////////////////
-
 //check if request is GET and the requested chunk exists or not. this makes testChunks work
+
+//TODO: file upload resuming is not confirmed to be working
+//but normal uploads work just fine if they are not interrupted
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if(!(isset($_GET['resumableIdentifier']) && trim($_GET['resumableIdentifier'])!='')){
         $_GET['resumableIdentifier']='';
     }
-    $temp_dir = 'temp/'.$_GET['resumableIdentifier'];
+    $temp_dir = '/var/www/html/chunkUploads/'.$_GET['resumableIdentifier'];
     if(!(isset($_GET['resumableFilename']) && trim($_GET['resumableFilename'])!='')){
         $_GET['resumableFilename']='';
     }
@@ -148,7 +155,7 @@ if (!empty($_FILES)) foreach ($_FILES as $file) {
     // init the destination file (format <filename.ext>.part<#chunk>
     // the file is stored in a temporary directory
     if(isset($_POST['resumableIdentifier']) && trim($_POST['resumableIdentifier'])!=''){
-        $temp_dir = 'temp/'.$_POST['resumableIdentifier'];
+        $temp_dir = $_SERVER['DOCUMENT_ROOT'].'/hidden/uploads/temp/'.$_POST['resumableIdentifier'];
     }
     $dest_file = $temp_dir.'/'.$_POST['resumableFilename'].'.part'.$_POST['resumableChunkNumber'];
 
@@ -156,12 +163,21 @@ if (!empty($_FILES)) foreach ($_FILES as $file) {
     if (!is_dir($temp_dir)) {
         mkdir($temp_dir, 0777, true);
     }
-
+    _log("UID: " .$_SESSION['uid']);
     // move the temporary file
     if (!move_uploaded_file($file['tmp_name'], $dest_file)) {
         _log('Error saving (move_uploaded_file) chunk '.$_POST['resumableChunkNumber'].' for file '.$_POST['resumableFilename']);
     } else {
         // check if all the parts present, and create the final destination file
-        createFileFromChunks($temp_dir, $_POST['resumableFilename'],$_POST['resumableChunkSize'], $_POST['resumableTotalSize'],$_POST['resumableTotalChunks']);
+
+
+        //the user id can be posted in, so this is a potential security issue, currently the floatval() will make sure that
+        //it is just a number (a valid label for the folder) then it should only potentially allow
+        //malicious uploading to the wrong folder, not stealing others files etc.
+        //TODO:it would be good if the user id was not posted, or double checked in another manner
+        if(intval($_POST['id']) != 0){ //returns 0 on 'error', msyql autoincrement starts at 1 for our uid field
+            createFileFromChunks((float)$_POST['id'], $temp_dir, $_POST['resumableFilename'],$_POST['resumableChunkSize'], $_POST['resumableTotalSize'],$_POST['resumableTotalChunks']);
+        }
+
     }
 }

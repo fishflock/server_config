@@ -7,8 +7,8 @@ if (!isset($_SESSION['uid'])) {
     header("location: /registration/login.php");
 }
 
-include_once('process.php');
-include_once('processManagement.php');
+include_once('../../phpHelpers/processes/process.php');
+include_once('../../phpHelpers/db/processManagement.php');
 
 $uid = $_SESSION['uid'];
 

@@ -1,3 +1,17 @@
+<?php
+
+//This file uses resumable.js, jquery and bootstrap to allow chunked uploading of files.
+
+
+
+
+if(!isset($_SESSION['uid'])){header("location: ../../registration/login.php");}
+else{$sess=$_SESSION['uid'];}
+//the user id is needed in javascript to know where the file should be placed.
+//this could potentially allow injection,
+
+?>
+
 
 <html>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -40,15 +54,11 @@
 
 </div>
 
-<?php
-if(!isset($_SESSION['uid'])){header("location: /registration/login.php");}
-else{$sess=$_SESSION['uid'];}
 
-?>
 <script>
     var tempFileVal = '<?php echo $sess ?>';
     var r = new Resumable({
-        target: 'phpHelpers/upload.php',
+        target: 'phpHelpers/responses/upload.php',
         testChunks: true,
         query: {id:tempFileVal}
     });

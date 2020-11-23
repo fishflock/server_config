@@ -1,4 +1,5 @@
 <?php
+//helper functions for many of the files in /pages/managers
 function formatSizeUnits($bytes)
 {
     if ($bytes >= 1073741824)

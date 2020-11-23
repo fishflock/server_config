@@ -2,14 +2,15 @@
 session_start();
 if (!isset($_SESSION['username'])) {
     $_SESSION['msg'] = "You must log in first";
-    header('location: /registration/login.php');
+    header('location: ../../registration/login.php');
 }
 if (!isset($_SESSION['uid'])) {
-    header("location: /registration/login.php");
+    header("location: ../../registration/login.php");
 }
 
 $uid = $_SESSION['uid'];
 
+//used on the x_output.php page when the download button is pressed
 if(isset($_POST["fileName"])){
     $file =  $_POST['fileName'];
 
@@ -38,9 +39,9 @@ if(isset($_POST["fileName"])){
     }
 }
 
+//used to load images onto the x_Output.php page when the 'view On Page' button is pressed
 if(isset($_GET["fileName"])){
     $file =  $_GET['fileName'];
-
     /* Test whether the file name contains illegal characters
     such as "../" using the regular expression */
     if(preg_match('/^[^.][-a-z0-9_.]+[a-z]$/i', $file)){
@@ -66,6 +67,8 @@ if(isset($_GET["fileName"])){
         die("Invalid file name!");
     }
 }
+
+//used by the gobsOutput.php and gobsOutput_cMat_i.php files to allow users to download files that are generated in the $uid/gobs_output/ folder
 if(isset($_POST["fileNameTXT"]) || isset($_POST["fileNameTXT1"])){
     $file =  (isset($_POST["fileNameTXT"]) ? $_POST['fileNameTXT']: $_POST['fileNameTXT1']);
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('../phpHelpers/header.php');
+include_once('../managers/header.php');
 
 ?>
 <html>

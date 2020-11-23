@@ -9,43 +9,18 @@ if (!isset($_SESSION['uid'])) {
 }
 
 $uid = $_SESSION['uid'];
-if (isset($_SESSION['uid'])) {
-    $directory = $_SERVER['DOCUMENT_ROOT'] . "/hidden/uploads/" . $uid . "/gobs_output";
-    if (!is_dir($directory)) {
-        mkdir($directory, 0775);
-    }
 
-    include_once($_SERVER['DOCUMENT_ROOT'] . '/processes/process.php');
-    include_once($_SERVER['DOCUMENT_ROOT'] . '/processes/processManagement.php');
-
-    if (isset($_POST['runFileName'])) {
-        $uid = $_SESSION['uid'];
-        $filePath = $_SERVER['DOCUMENT_ROOT'] . "/hidden/uploads/" . $uid . "/gobs_output/" . $_POST['runFileName'];
-        $outputFilePath = $_SERVER['DOCUMENT_ROOT'] . "/hidden/uploads/" . $uid . "/x_output/" . pathinfo($_POST['runFileName'])['filename'] . '.png';
-
-        $validWeightParams = array("weight", "close", "eigen", "between");
-        $validGroupParams = array("lpa", "blondel");
-        $validLayoutParams = array("spring", "fa2");
-
-        //check for valid param
-        $weightParam = (in_array($_POST['param1'], $validWeightParams) ? $_POST['param1'] : "");
-        $groupParam = (in_array($_POST['param2'], $validGroupParams) ? $_POST['param2'] : "");
-        $layoutParam = (in_array($_POST['param3'], $validLayoutParams) ? $_POST['param3'] : "");
-
-        $params = $weightParam . ' ' . $groupParam . ' ' . $layoutParam . ' ' . floatval($_POST['param4']);
-
-
-        if (is_file($filePath)) {
-            $newProcess = new Process("create", $_SESSION['uid'], $_POST['runFileName'], date(time()), null, "x", $outputFilePath, $params);
-            register_process($_SESSION['uid'], $_POST['runFileName'], $newProcess->getUniqueID(), 'x');
-        }
-        header("location: /managers/x_output.php");
-    }
+$directory = $_SERVER['DOCUMENT_ROOT'] . "/hidden/uploads/" . $uid . "/gobs_output";
+if (!is_dir($directory)) {
+    mkdir($directory, 0775);
 }
 
-include_once('../phpHelpers/deleteFile.php');
-include_once('../phpHelpers/header.php');
-include_once('../phpHelpers/fileSize.php');
+
+
+include_once('../../phpHelpers/responses/deleteFile.php');
+include_once('header.php');
+include_once('../../phpHelpers/helperFunctions.php');
+include_once('../../phpHelpers/responses/runFile.php');
 ?>
 <html>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -77,7 +52,7 @@ include_once('../phpHelpers/fileSize.php');
 
             echo "<td><button id='btnRunFile' name='runFile' value=$name type='button'>Create Visualization </td>";
 
-            echo "<td> <form method='post' action='/phpHelpers/downloadFile.php'>";
+            echo "<td> <form method='post' action='/phpHelpers/responses/downloadFile.php'>";
             echo " <input name='fileNameTXT' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
             echo "</td>";
@@ -100,7 +75,7 @@ include_once('../phpHelpers/fileSize.php');
 
 <?php include_once('./gobsOutput_cMat.php'); ?>
 <div style="float: left; padding-left: 10%">
-<?php include_once('../processes/listProcesses.php'); ?>
+<?php include_once('./listProcesses.php'); ?>
 </div>
 </body>
 </html>
@@ -108,7 +83,7 @@ include_once('../phpHelpers/fileSize.php');
 This is the run file popup for NetworkX Params
 --->
 
-<link rel='stylesheet' href="popupStyle.css">
+<link rel='stylesheet' href="/pages/managers/popupStyle.css">
 
 <div id="myModal" class="modal">
 
@@ -118,7 +93,7 @@ This is the run file popup for NetworkX Params
         <form method='post'>
 
                 <label for="popupFileName">File Name</label>
-                <input id='popupFileName' name='runFileName' type='text' value=''>
+                <input id='popupFileName' name='runFileNameX' type='text' value=''>
 
                 <label for="popupNumber1">Scaling Options:</label>
                 <select id='popupNumber1' name='param1' >
@@ -142,7 +117,6 @@ This is the run file popup for NetworkX Params
 
                 <label for="popupNumber4">Scale Multiplier</label>
                 <input id='popupNumber4' name='param4' type='number' min="0.00001" max="1" step="0.00001">
-
 
                 <br><br>
                 <input name='submit' type='submit' id="submit" value='Create Visualization' >

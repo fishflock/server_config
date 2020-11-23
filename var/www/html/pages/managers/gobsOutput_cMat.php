@@ -1,12 +1,8 @@
 <?php
 
-
-
-include_once('../processes/process.php');
-include_once('../phpHelpers/fileSize.php');
-include_once('../phpHelpers/deleteFile.php');
-
-
+include_once('../../phpHelpers/processes/process.php');
+include_once('../../phpHelpers/helperFunctions.php');
+include_once('../../phpHelpers/responses/deleteFile.php');
 
 if (isset($_SESSION['uid'])) {
     $uid = $_SESSION['uid'];
@@ -38,7 +34,7 @@ if (isset($_SESSION['uid'])) {
             echo "<td>" . formatSizeUnits($cur->getSize()) . "</td>";
             echo "<td>" .  date ("Y-m-d H:i:s",filemtime($cur->getPathname()))  . "</td>";
 
-            echo "<td> <form method='post' action='/phpHelpers/downloadFile.php'>";
+            echo "<td> <form method='post' action='/phpHelpers/responses/downloadFile.php'>";
             echo " <input name='fileNameTXT1' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
             echo "</td>";
