@@ -1,9 +1,9 @@
-## Repository Info:
+# Repository Info:
 This Repository represents the configuration of a LAMP stack on Ubuntu 18.04,  Apache configuration and webpages included.
 
 
 
-### Download and Configuration:
+# Download and Configuration:
 This is meant to be installed on a fresh ubuntu installation (tested with 18.04).  Cloning the git repo as written below will not be careful about overwriting files etc. Run it at your own risk on an existing server.
 
 1. Install git: $ sudo apt-get -y install git
@@ -45,5 +45,58 @@ You may need to restart apache `sudo systemctl restart apache2`
 Test that the server is functional.
 
 
+# Project Directory Info:
+
+## Other Files:
+
+### schema.sql:
+	Exported database schema for the mysql database
+
+### /etc:
+	Configuration files for apache2 and php 7.2 installations.
+	When installing, you do not have to copy these installations files if know what you are doing.
+	The site is using the /etc/epach2/sites-available/000-default.conf site
+	
 
 
+
+___
+## Site Files in /var/www/html:
+### /dependencies:
+	Javascript libraries
+___
+### /pages:
+This directory contains almost all of the folders that will be seen by users, the exceptions to this are /index.php and /registration/login and register
+
+___
+### /phpHelpers:
+Includes files that define the server's behaviour
+
+#### phpHelpers/db:
+	Files that interact with the mysql database
+#### phpHelpers/processes:
+	File that defines a process object
+#### phpHelpers/responses:
+	Files that define responses to POST requests
+
+___
+### /registration:
+	Front-End files that are used to login, logout, and register
+
+___
+### /index.php:
+	The main page of the site, includes the file listing and 
+
+___
+### /hidden:
+	A set of directories that CANNOT be accessed by users. (It is blocked in the server configuration).  It contains...
+#### hidden/scripts:
+	Contains the GOBS executeable 'gobs' and the Python file 'nX' used when spawning processes.
+#### hidden/uploads:
+	Contains subfolders, one for each user
+##### hidden/uploads/\<uid>
+	A folder created for each user that contains subfolders, and the files that they upload to the server
+###### hidden/uploads/\<uid>/gobs_output:
+	Files that are outputted by the GOBS algorithm
+###### hidden/uploads/\<uid>/x_output:
+	Files that are outputted by NetworkX
