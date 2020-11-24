@@ -1,4 +1,4 @@
-<?php include_once('../db/loginManagement.php'); ?>
+<?php include_once('../phpHelpers/db/loginManagement.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
