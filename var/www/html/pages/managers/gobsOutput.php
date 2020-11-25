@@ -35,13 +35,14 @@ include_once('../../phpHelpers/responses/runFile.php');
             <th>Date Modified</th>
             <th>Create Visualization</th>
             <th>Download File</th>
+            <th>View Parameters</th>
             <th>Delete File</th>
         </tr>
 
         <?php
         $it = new DirectoryIterator($directory);
         foreach (new IteratorIterator($it) as $filename => $cur) {
-            if ($it->isDot() || $it->isDir() || endsWith(basename($cur),"_c_mat.txt")) continue;
+            if ($it->isDot() || $it->isDir() || endsWith(basename($cur),"_c_mat.txt" ) || endsWith(basename($cur),"_params.txt") ) continue;
             $name = basename($cur);
             echo "<tr>";
             $sourceFileName = substr($name, 0, -4);
@@ -55,6 +56,13 @@ include_once('../../phpHelpers/responses/runFile.php');
             echo "<td> <form method='post' action='/phpHelpers/responses/downloadFile.php'>";
             echo " <input name='fileNameTXT' type='text' value=$name hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
+            echo "</td>";
+
+            $paramFile = pathinfo($name)['filename']. '_params.txt';
+
+            echo "<td> <form method='post' action='/phpHelpers/responses/downloadFile.php'>";
+            echo " <input name='fileNameTXT' type='text' value=$paramFile hidden>";
+            echo " <input name='submit' type='submit' value='Download Parameters'></form>";
             echo "</td>";
 
             echo "<td>" . "<form method='post'>";

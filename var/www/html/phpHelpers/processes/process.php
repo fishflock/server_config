@@ -8,6 +8,7 @@ class Process{
     private $binary; //gobs for GOBS, x for NetworkX
     private $uniqueID;
     private $params;//space separated string with cmd line params
+    private $command;
 
     private $PID;
 
@@ -48,7 +49,7 @@ class Process{
 
     private function runCom(){
         $command = "";
-        switch($this->binary){
+        switch($this->binary){ //TODO:there is very little error handling involved with spawning these processes
             case "gobs":
                 $command = 'nice -n 10 '. $this->binaryPath. ' '. $this->filePath . ' '.$this->outputFile . ' '.($this->params !=null ? $this->params : "1 1 1") .' > /dev/null 2>&1 &';
                 break;
@@ -87,6 +88,21 @@ class Process{
         $command = 'ps -p '.$this->uniqueID. ' -o etime';
         exec($command,$op);
         return $op[1];
+    }
+
+    public function getRunParams(){
+        switch($this->binary){
+            case "gobs":
+                $splitParams = explode(" ",$this->params);
+                return "Normalization: " . $splitParams[0]. " Alpha Value: " . $splitParams[1].
+                    " Vector History Length: " . $splitParams[2]. " Number of Directions: " . $splitParams[3].
+                    " Statistical Comparison: " . $splitParams[4];
+            case "x":
+                $splitParams = explode(" ",$this->params);
+                return "Scaling Option: " . $splitParams[0]. " Grouping Method: " . $splitParams[1].
+                    " Layout: " . $splitParams[2]. " Scale Multiplier: " . $splitParams[3];
+
+        }
     }
 
     public function stop(){

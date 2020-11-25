@@ -47,13 +47,14 @@ include_once('../../phpHelpers/helperFunctions.php');
             <th>Date Modified</th>
             <th>View</th>
             <th>Download</th>
+            <th>View Parameters</th>
             <th>Delete</th>
         </tr>
 
         <?php
         $it = new DirectoryIterator($directory);
         foreach (new IteratorIterator($it) as $filename => $cur) {
-            if ($it->isDot() || $it->isDir()) continue;
+            if ($it->isDot() || $it->isDir() || endsWith(basename($cur),"_params.txt")) continue;
             $ogName = basename($cur);
             $name = substr(basename($cur), 0, -4 );
             echo "<tr>";
@@ -65,6 +66,13 @@ include_once('../../phpHelpers/helperFunctions.php');
             echo "<td>" . "<form method='post' action='/phpHelpers/responses/downloadFile.php'>";
             echo " <input name='fileName' type='text' value=$ogName hidden>";
             echo " <input name='submit' type='submit' value='Download'></form>";
+            echo "</td>";
+
+            $paramFile = pathinfo($ogName)['filename']. '_params.txt';
+
+            echo "<td> <form method='post' action='/phpHelpers/responses/downloadFile.php'>";
+            echo " <input name='fileNameTXTX' type='text' value=$paramFile hidden>";
+            echo " <input name='submit' type='submit' value='Download Parameters'></form>";
             echo "</td>";
 
             echo "<td>" . "<form method='post'>";
