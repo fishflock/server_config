@@ -44,6 +44,9 @@ You may need to restart apache `sudo systemctl restart apache2`
 Test that the server is functional.
 
 
+If you need to update the executable for GOBS and the NetworkX Python file, just drop them into the scripts folder, make sure they are executable, and have ownership permissions like `www-data:root`
+
+
 # Project Directory Info:
 
 ## Other Files:
